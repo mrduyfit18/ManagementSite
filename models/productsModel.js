@@ -1,10 +1,10 @@
 const {database} = require('../DAL/loadDatabase');
 const ObjectId = require('mongodb').ObjectId;
-//let listProducts;
+let listProducts;
 
-// exports.Init = async () => {
-//     listProducts = await db.Connect();
-// }
+exports.Init = async () => {
+    listProducts = await db.Connect();
+}
 
 
 exports.list = async () => {
@@ -24,4 +24,14 @@ exports.getProductByType = async (type, number) =>{
     const collection = database().collection('Products');
     let result =  await collection.find({'type': type}).limit(number);
     return await result.toArray().then();
+}
+
+exports.UpdateProduct = async (req) =>{
+    const collection = await database().collection('Products');
+    await collection.updateOne({'_id': ObjectId(req.params.id)},{$set: {name: req.body.name}});
+}
+
+exports.DeleteProduct = async (req) =>{
+    const collection = await database().collection('Products');
+    await collection.deleteOne({'_id': ObjectId(req.params.id)});
 }

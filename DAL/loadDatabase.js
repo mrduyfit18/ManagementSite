@@ -12,6 +12,8 @@ async function run() {
         if(!client.isConnected()){
             await client.connect();
             db = await client.db('data');
+            //db =  await client.db('project_db');
+            
             console.log('Successfully connected');
         }
 
