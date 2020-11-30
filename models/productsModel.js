@@ -31,6 +31,18 @@ exports.UpdateProduct = async (req) =>{
     await collection.updateOne({'_id': ObjectId(req.params.id)},{$set: {name: req.body.name}});
 }
 
+exports.AddProduct = async (req) =>{
+    const newProduct = {
+        manufacturer: req.body.manufacturer,
+        name: req.body.name,
+        cover: req.body.cover,
+        basePrice: req.body.basePrice,
+        type: req.body.type
+    }
+    const collection = await database().collection('Products');
+    await collection.insertOne(newProduct);
+}
+
 exports.DeleteProduct = async (req) =>{
     const collection = await database().collection('Products');
     await collection.deleteOne({'_id': ObjectId(req.params.id)});

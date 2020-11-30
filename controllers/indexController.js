@@ -20,6 +20,15 @@ exports.SaveUpdate =  async (req, res, next) => {
 
 }
 
+exports.add = (req, res, next) => {
+    res.render('add');
+}
+
+exports.SaveProduct =  async (req, res, next) => {
+    await productsModel.AddProduct(req).then(res.redirect('/'));
+
+}
+
 exports.delete = async (req, res, next) => {
     await productsModel.DeleteProduct(req).then(res.redirect('/'));
 }
