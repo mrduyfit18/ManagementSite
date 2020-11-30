@@ -1,2 +1,27 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+
+
+<div class="container">
+    <h2>Products</h2>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Manufacturer</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Cover path</th>
+            <th>Type</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each Products}}
+        <tr>
+            <td>{{manufacturer}}</td>
+            <td>{{name}}</td>
+            <td>{{basePrice}}</td>
+            <td>{{cover}}</td>
+            <td>{{type}}</td>
+        </tr>
+        {{/each}}
+        </tbody>
+    </table>
+</div>
