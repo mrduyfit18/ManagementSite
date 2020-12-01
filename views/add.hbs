@@ -1,4 +1,4 @@
-<div class="container">
+{{!-- <div class="container">
     <h2>Add a product</h2>
         <form action="/add-product/save-product" method="post">
             <label for="manufacturer">branch:</label>
@@ -13,4 +13,50 @@
             <input type="text" id="type" name="type"><br><br>
             <input type="submit" class="btn btn-primary" value="Add">
         </form>
+</div> --}}
+
+<div class="flex">
+    <div class="col-lg-6 card">
+        <div class="card-header">
+            <strong>Update a product</strong>
+        </div>
+        <div class="card-body card-block">
+            <form action="/add-product/save-product" method="post">
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="manufacturer">Branch:</label></div>
+                    <div class="col-12 col-md-9">
+                        <input type="text" name="manufacturer" id="manufacturer" class="form-control">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="name">Name:</label></div>
+                    <div class="col-12 col-md-9">
+                        <input type="text" id="name" name="name" class="form-control"> 
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="cover">Image:</label></div>
+                    <div class="col-12 col-md-9">
+                         <input type="text" id="cover" name="cover" value="img/products/surface-pro.jpg" readonly="true" class="form-control">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="basePrice">BasePrice:</label></div>
+                    <div class="col-12 col-md-9">
+                        <input type="text" id="basePrice" name="basePrice" class="form-control">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="type">Type</label></div>
+                    <div class="col-12 col-md-9">
+                        <input type="text" id="type" name="type" class="form-control">
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <input type="submit" class="btn btn-primary btn-sm" value="Add">
+                    <a href="/"><button type="button" class="btn btn-danger btn-sm">Do not save</button></a>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>

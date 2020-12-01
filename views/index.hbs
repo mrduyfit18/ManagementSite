@@ -1,34 +1,111 @@
-
-
-<div class="container">
+{{!-- <div class="container">
     <h2>Products</h2>
     <table class="table table-bordered">
         <thead>
-        <tr>
-            <th>Manufacturer</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Cover path</th>
-            <th>Type</th>
-            <th>Option</th>
-        </tr>
+            <tr>
+                <th>Manufacturer</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Cover path</th>
+                <th>Type</th>
+                <th>Option</th>
+            </tr>
         </thead>
         <tbody>
-        {{#each Products}}
-        <tr>
-            <td>{{manufacturer}}</td>
-            <td><a href="/{{_id}}">{{name}}</a></td>
-            <td>{{basePrice}}</td>
-            <td>{{cover}}</td>
-            <td>{{type}}</td>
-            <td><form action="/{{_id}}/delete" method="post">
-                <input class="btn btn-danger" type="submit" value="Delete">
-            </form></td>
-        </tr>
-        {{/each}}
+            {{#each Products}}
+            <tr>
+                <td>{{manufacturer}}</td>
+                <td><a href="/{{_id}}">{{name}}</a></td>
+                <td>{{basePrice}}</td>
+                <td>{{cover}}</td>
+                <td>{{type}}</td>
+                <td>
+                    <form action="/{{_id}}/delete" method="post">
+                        <input class="btn btn-danger" type="submit" value="Delete">
+                    </form>
+                </td>
+            </tr>
+            {{/each}}
         </tbody>
     </table>
     <form action="/add-product" method="post">
         <input class="btn btn-primary" type="submit" value="Add Product">
     </form>
+</div> --}}
+
+<div class="content mt-3">
+    <div class="animated fadeIn">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <strong class="card-title">Data Table</strong>
+                    </div>
+                    <div class="card-body">
+                        <div id="bootstrap-data-table_wrapper"
+                            class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table id="bootstrap-data-table"
+                                        class="table table-striped table-bordered dataTable no-footer" role="grid"
+                                        aria-describedby="bootstrap-data-table_info">
+                                        <thead style="text-align: center">
+                                            <tr role="row">
+                                                <th class="sorting_asc" tabindex="0"
+                                                    aria-controls="bootstrap-data-table" rowspan="1" colspan="1"
+                                                    aria-sort="ascending"
+                                                    aria-label="Name: activate to sort column descending"
+                                                    style="width: 239px;">Branch</th>
+                                                <th class="sorting" tabindex="0" aria-controls="bootstrap-data-table"
+                                                    rowspan="1" colspan="1"
+                                                    aria-label="Position: activate to sort column ascending"
+                                                    style="width: 399px;">Name</th>
+                                                <th class="sorting" tabindex="0" aria-controls="bootstrap-data-table"
+                                                    rowspan="1" colspan="1"
+                                                    aria-label="Office: activate to sort column ascending"
+                                                    style="width: 177px;">Price</th>
+                                                <th class="sorting" tabindex="0" aria-controls="bootstrap-data-table"
+                                                    rowspan="1" colspan="1"
+                                                    aria-label="Salary: activate to sort column ascending"
+                                                    style="width: 140px;">Cover path</th>
+                                                <th class="sorting" tabindex="0" aria-controls="bootstrap-data-table"
+                                                    rowspan="1" colspan="1"
+                                                    aria-label="Salary: activate to sort column ascending"
+                                                    style="width: 140px;">Type</th>
+                                                <th class="sorting" tabindex="0" aria-controls="bootstrap-data-table"
+                                                    rowspan="1" colspan="1"
+                                                    aria-label="Salary: activate to sort column ascending"
+                                                    style="width: 140px;">Option</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody style="text-align: center">
+                                            {{#each Products}}
+                                            <tr>
+                                                <td>{{manufacturer}}</td>
+                                                <td><a href="/{{_id}}">{{name}}</a></td>
+                                                <td>{{basePrice}}</td>
+                                                <td>{{cover}}</td>
+                                                <td>{{type}}</td>
+                                                <td>
+                                                    <form action="/{{_id}}/delete" method="post">
+                                                        <input class="btn btn-danger" type="submit" value="Delete">
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                            {{/each}}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <form action="/add-product" method="post" class="d-flex justify-content-end">
+                            <input class="btn btn-primary" type="submit" value="Add Product">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

@@ -1,0 +1,7 @@
+.flex{
+    display: flex;
+    flex-wrap: wrap-reverse;
+    justify-content: center;
+    align-items: flex-end;
+    align-content: center;
+}
