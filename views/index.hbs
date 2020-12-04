@@ -82,12 +82,12 @@
                                             {{#each Products}}
                                             <tr>
                                                 <td>{{manufacturer}}</td>
-                                                <td><a href="/{{_id}}">{{name}}</a></td>
+                                                <td><a href="/update/{{_id}}">{{name}}</a></td>
                                                 <td>{{basePrice}}</td>
                                                 <td>{{cover}}</td>
                                                 <td>{{type}}</td>
                                                 <td>
-                                                    <form action="/{{_id}}/delete" method="post">
+                                                    <form action="/delete/{{_id}}" method="post">
                                                         <input class="btn btn-danger" type="submit" value="Delete">
                                                     </form>
                                                 </td>
@@ -100,7 +100,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <form action="/add-product" method="post" class="d-flex justify-content-end">
+                        <form action="/add" method="post" class="d-flex justify-content-end">
                             <input class="btn btn-primary" type="submit" value="Add Product">
                         </form>
                     </div>

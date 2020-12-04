@@ -1,34 +1,22 @@
 const {database} = require('../DAL/loadDatabase');
-const ObjectId = require('mongodb').ObjectId;
-let listProducts;
+const mongoose=require('mongoose');
+const ObjectId = mongoose.Types.ObjectId;
 
-exports.Init = async () => {
-    listProducts = await db.Connect();
-}
-
+const Products = require('./mongooseModels/products');
 
 exports.list = async () => {
-    const collection = await database().collection('Products');
-    let result =  await collection.find({});
-    return await result.toArray().then();
+    return Products.find({});
 }
 
 exports.getProduct = async (id) => {
-    const collection = database().collection('Products');
-    if(id.length > 11){
-        return  await collection.findOne({'_id': ObjectId(id)});
-    }
+    console.log(id);
+    return Products.findOne({'_id': ObjectId(id)});
 }
 
-exports.getProductByType = async (type, number) =>{
-    const collection = database().collection('Products');
-    let result =  await collection.find({'type': type}).limit(number);
-    return await result.toArray().then();
-}
+
 
 exports.UpdateProduct = async (req) =>{
-    const collection = await database().collection('Products');
-    await collection.updateOne({'_id': ObjectId(req.params.id)},{$set: {name: req.body.name}});
+    await Products.updateOne({'_id': ObjectId(req.params.id)},{$set: {name: req.body.name}});
 }
 
 exports.AddProduct = async (req) =>{
@@ -39,11 +27,9 @@ exports.AddProduct = async (req) =>{
         basePrice: req.body.basePrice,
         type: req.body.type
     }
-    const collection = await database().collection('Products');
-    await collection.insertOne(newProduct);
+    await Products.insertMany(newProduct);
 }
 
 exports.DeleteProduct = async (req) =>{
-    const collection = await database().collection('Products');
-    await collection.deleteOne({'_id': ObjectId(req.params.id)});
+    await Products.deleteOne({'_id': ObjectId(req.params.id)});
 }
