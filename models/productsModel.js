@@ -19,13 +19,15 @@ exports.UpdateProduct = async (req) =>{
     await Products.updateOne({'_id': ObjectId(req.params.id)},{$set: {name: req.body.name}});
 }
 
-exports.AddProduct = async (req) =>{
+exports.AddProduct = async (fields, coverLocal) => {
+    const fileName = coverLocal.split('/').pop();
+    const coverPath = process.env.GClOUD_IMAGE_FOlDER + fileName + '?alt=media'
     const newProduct = {
-        manufacturer: req.body.manufacturer,
-        name: req.body.name,
-        cover: req.body.cover,
-        basePrice: req.body.basePrice,
-        type: req.body.type
+        manufacturer: fields.manufacturer,
+        name: fields.name,
+        cover: coverPath,
+        basePrice: fields.basePrice,
+        type: fields.type
     }
     await Products.insertMany(newProduct);
 }

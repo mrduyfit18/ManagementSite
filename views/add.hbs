@@ -21,7 +21,7 @@
             <strong>Add a product</strong>
         </div>
         <div class="card-body card-block">
-            <form action="/add/save" method="post">
+            <form action="/add/save" method="post" enctype="multipart/form-data">
                 <div class="row form-group">
                     <div class="col col-md-3"><label for="manufacturer">Branch:</label></div>
                     <div class="col-12 col-md-9">
@@ -37,7 +37,8 @@
                 <div class="row form-group">
                     <div class="col col-md-3"><label for="cover">Image:</label></div>
                     <div class="col-12 col-md-9">
-                         <input type="text" id="cover" name="cover" value="img/products/surface-pro.jpg" readonly="true" class="form-control">
+<!--                         <input type="text" id="cover" name="cover" value="img/products/surface-pro.jpg" readonly="true" class="form-control">-->
+                            <input type="file" name="cover">
                     </div>
                 </div>
                 <div class="row form-group">

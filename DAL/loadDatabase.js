@@ -5,7 +5,7 @@ const ObjectId = require('mongodb').ObjectId;
 
 
 // Connection URI
-const uri = 'mongodb+srv://mrduyfit:Ptudw1831@web.znmrk.mongodb.net/data?retryWrites=true&w=majority' //process.env.URI;
+const uri = process.env.DB_URI //process.env.URI;
 
 // Create a new MongoClient
 //const client = new MongoClient(uri, {useUnifiedTopology: true});
