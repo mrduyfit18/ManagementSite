@@ -4,7 +4,7 @@ const homeController = require('../controllers/indexController');
 const addProductController = require('../controllers/addProductController');
 
 /* GET home page. */
-router.get('/', homeController.index);
+router.use('/', homeController.index);
 
 
 module.exports = router;

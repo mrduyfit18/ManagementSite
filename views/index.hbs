@@ -41,6 +41,41 @@
                     <div class="card-header">
                         <strong class="card-title">Data Table</strong>
                     </div>
+                    <form method="post" onsubmit="get_action(this);" id="search">
+                        <div class="search hidden-xs" data-style="hidden">
+                            <div class="input">
+
+                                <input type="text" name="search" value="" placeholder="Type here..." id="textSearch" />
+                                <input type="submit" id="myBtn"/>
+                            </div>
+                        </div>
+                    </form>
+                    <form method="post" id="typeform">
+                        <div class="btn-group" data-toggle="buttons">
+                            <label class="btn btn-default btn-sm active">
+                                <input type="radio" name="options" id="option1" onchange="TypeFormSubmit();" value="" {{#if Allcheck}}checked{{/if}}> All products
+                            </label>
+                            <label class="btn btn-default btn-sm">
+                                <input type="radio" name="options" id="option2" onchange="TypeFormSubmit();" value="Desktops" {{#if Desktopscheck}}checked{{/if}}> Desktops
+                            </label>
+                            <label class="btn btn-default btn-sm">
+                                <input type="radio" name="options" id="option3" onchange="TypeFormSubmit();" value="Laptops" {{#if Laptopscheck}}checked{{/if}}> Laptops
+                            </label>
+                            <label class="btn btn-default btn-sm">
+                                <input type="radio" name="options" id="option4" onchange="TypeFormSubmit();" value="Tablets" {{#if Tabletscheck}}checked{{/if}}> Tablets
+                            </label>
+                            <label class="btn btn-default btn-sm">
+                                <input type="radio" name="options" id="option5" onchange="TypeFormSubmit();" value="Hybrids" {{#if Hybridscheck}}checked{{/if}}> Hybrids
+                            </label>
+                        </div>
+                    </form>
+                    <script type="text/javascript">
+                        function TypeFormSubmit(){
+                            document.getElementById("typeform").action = '/type=' + document.getElementById('typeform').options.value;
+                            document.getElementById("typeform").submit();
+
+                        }
+                    </script>
                     <div class="card-body">
                         <div id="bootstrap-data-table_wrapper"
                             class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
@@ -126,3 +161,20 @@
         </div>
     </div>
 </div>
+
+<script>
+    const input = document.getElementById("textSearch");
+    input.addEventListener("keyup", function(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            document.getElementById("myBtn").click();
+        }
+    });
+
+
+</script>
+<script type="text/javascript">
+    function get_action(form) {
+        form.action = '/?name=' + document.getElementById('textSearch').value;
+    }
+</script>

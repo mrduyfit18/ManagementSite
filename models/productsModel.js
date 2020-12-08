@@ -4,9 +4,9 @@ const ObjectId = mongoose.Types.ObjectId;
 
 const Products = require('./mongooseModels/products');
 
-exports.list = async (currentPage) => {
+exports.list = async (filter,currentPage) => {
     const currPage = currentPage || 1;
-    return await Products.paginate({}, {page: currPage, limit: 10});
+    return await Products.paginate( filter, {page: currPage, limit: 10});
 }
 
 exports.getProduct = async (id) => {
@@ -17,10 +17,16 @@ exports.getProduct = async (id) => {
 
 
 exports.UpdateProduct = async (fields, coverLocal, id) =>{
-    let fileName =  await coverLocal.split('/').pop();
-    fileName = await fileName.split('\\').pop();
+    let fileName;
+    if(coverLocal) {
+        fileName = await coverLocal.split('/').pop();
+        fileName = await fileName.split('\\').pop();
+    }
     const coverPath = await process.env.GClOUD_IMAGE_FOlDER + fileName + '?alt=media';
-    await Products.updateOne({'_id':ObjectId(id)}, {name:fields.name, cover:coverPath, manufacturer:fields.manufacturer, basePrice: fields.basePrice,type: fields.type });
+    await Products.updateOne({'_id':ObjectId(id)}, {name:fields.name, manufacturer:fields.manufacturer, basePrice: fields.basePrice,type: fields.type });
+    if(fileName !==undefined){
+        await Products.updateOne({'_id':ObjectId(id)}, {cover: coverPath });
+    }
 }
 
 exports.AddProduct = async (fields, coverLocal) => {
