@@ -99,20 +99,22 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-footer d-flex justify-content-around>
-                        <a href="/?page={{prevPage}}">
-                            <button class="btn btn-primary" >
+                    <div class="card-footer d-flex justify-content-around">
+                        <ul class="pagination pagination-sm m-0">
+                            <a href="/?page={{prevPage}}">
+                            <button class="page-link" >
                                 Prev
                             </button>
-                        </a>
-                        <p>
-                            {{page}}
-                        </p>
-                        <a href="/?page={{nextPage}}">
-                            <button class="btn btn-primary">
+                            </a>
+                            <label class="page-link">
+                                {{page}}
+                            </label>
+                            <a href="/?page={{nextPage}}">
+                            <button class="page-link">
                                 Next
                             </button>
-                        </a>
+                            </a>
+                        </ul>
                     </div>
                     <div class="card-footer">
                         <form action="/add" method="post" class="d-flex justify-content-end">
