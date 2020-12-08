@@ -4,10 +4,8 @@ const updateProductController = require('../controllers/updateProductController'
 
 /* GET home page. */
 
+router.post('/:id/save', updateProductController.SaveUpdate);
 router.use('/:id', updateProductController.update);
-
-
-router.post('/save', updateProductController.SaveUpdate);
 
 
 module.exports = router;

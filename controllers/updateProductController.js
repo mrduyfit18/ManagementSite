@@ -6,10 +6,11 @@ const uuid = require('uuid-v4');
 
 const adminAccount = require('../storageserver-b4fd7-firebase-adminsdk-o7qpl-3939aaef50.json');
 
-admin.initializeApp({
+const app = admin.initializeApp({
     credential: admin.credential.cert(adminAccount),
     storageBucket: process.env.GCLOUD_BUCKET
-});
+}, 'app'
+);
 
 const bucket = admin.storage().bucket();
 
@@ -55,9 +56,9 @@ exports.SaveUpdate =  async (req, res, next) => {
                 uploadFile(newPath, files.cover).then();
             });
         }
-        console.log(fields);
         productsModel.UpdateProduct(fields, newPath, req.params.id).then(res.redirect('/'));
     });
 
 
 }
+

@@ -1,17 +1,20 @@
 const productsModel = require('../models/productsModel');
 const formidable = require('formidable');
 const fs = require('fs');
-//const admin = require("firebase-admin");
+const admin = require("firebase-admin");
 const uuid = require('uuid-v4');
 
-// const adminAccount = require('../storageserver-b4fd7-firebase-adminsdk-o7qpl-3939aaef50.json');
-//
-// admin.initializeApp({
-//     credential: admin.credential.cert(adminAccount),
-//     storageBucket: process.env.GCLOUD_BUCKET
-// });
 
-//const bucket = admin.storage().bucket();
+const adminAccount = require('../storageserver-b4fd7-firebase-adminsdk-o7qpl-3939aaef50.json');
+
+const newApp = admin.initializeApp({
+        credential: admin.credential.cert(adminAccount),
+        storageBucket: process.env.GCLOUD_BUCKET
+    }
+);
+
+
+const bucket = admin.storage().bucket();
 
 exports.add = (req, res, next) => {
     res.render('add');

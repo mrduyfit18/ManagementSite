@@ -6,7 +6,7 @@ const Products = require('./mongooseModels/products');
 
 exports.list = async (currentPage) => {
     const currPage = currentPage || 1;
-    return await Products.paginate({}, {page: currPage, limit: 2});
+    return await Products.paginate({}, {page: currPage, limit: 10});
 }
 
 exports.getProduct = async (id) => {
@@ -17,9 +17,10 @@ exports.getProduct = async (id) => {
 
 
 exports.UpdateProduct = async (fields, coverLocal, id) =>{
-    const fileName = coverLocal.split('\\').pop();
-    const coverPath = process.env.GClOUD_IMAGE_FOlDER + fileName + '?alt=media';
-    Products.updateOne({'_id':ObjectId(id)}, {'name':fields.name, 'cover':coverPath, 'manufacturer':fields.manufacturer, 'basePrice': fields.basePrice,'type': fields.type });
+    let fileName =  await coverLocal.split('/').pop();
+    fileName = await fileName.split('\\').pop();
+    const coverPath = await process.env.GClOUD_IMAGE_FOlDER + fileName + '?alt=media';
+    await Products.updateOne({'_id':ObjectId(id)}, {name:fields.name, cover:coverPath, manufacturer:fields.manufacturer, basePrice: fields.basePrice,type: fields.type });
 }
 
 exports.AddProduct = async (fields, coverLocal) => {
