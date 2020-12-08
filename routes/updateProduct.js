@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const updateProductController = require('../controllers/addProductController');
+const updateProductController = require('../controllers/updateProductController');
 
 /* GET home page. */
 
-router.post('/:id', updateProductController.add);
-router.get('/:id', updateProductController.add);
+router.use('/:id', updateProductController.update);
 
-router.post('/save', updateProductController.SaveProduct);
+
+router.post('/save', updateProductController.SaveUpdate);
 
 
 module.exports = router;

@@ -1,21 +1,17 @@
 const productsModel = require('../models/productsModel');
 const formidable = require('formidable');
 const fs = require('fs');
-//const admin = require("firebase-admin");
+const admin = require("firebase-admin");
 const uuid = require('uuid-v4');
 
-// const adminAccount = require('../storageserver-b4fd7-firebase-adminsdk-o7qpl-3939aaef50.json');
-//
-// admin.initializeApp({
-//     credential: admin.credential.cert(adminAccount),
-//     storageBucket: process.env.GCLOUD_BUCKET
-// });
+const adminAccount = require('../storageserver-b4fd7-firebase-adminsdk-o7qpl-3939aaef50.json');
 
-//const bucket = admin.storage().bucket();
+admin.initializeApp({
+    credential: admin.credential.cert(adminAccount),
+    storageBucket: process.env.GCLOUD_BUCKET
+});
 
-exports.add = (req, res, next) => {
-    res.render('add');
-}
+const bucket = admin.storage().bucket();
 
 async function uploadFile(filePath, fileInfo) {
 
@@ -38,7 +34,13 @@ async function uploadFile(filePath, fileInfo) {
     });
 }
 
-exports.SaveProduct = (req, res, next) => {
+exports.update =  async (req, res, next) => {
+    const Product = await productsModel.getProduct(req.params.id);
+    // Pass data to view to display list of products
+    res.render('update', { Product});
+}
+
+exports.SaveUpdate =  async (req, res, next) => {
     const form = formidable({ multiples: true });
     let newPath;
     form.parse(req, (err, fields, files) => {
@@ -53,6 +55,9 @@ exports.SaveProduct = (req, res, next) => {
                 uploadFile(newPath, files.cover).then();
             });
         }
-        productsModel.AddProduct(fields, newPath).then(res.redirect('/'));
+        console.log(fields);
+        productsModel.UpdateProduct(fields, newPath, req.params.id).then(res.redirect('/'));
     });
+
+
 }
