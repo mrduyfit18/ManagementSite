@@ -5,3 +5,9 @@
     align-items: flex-end;
     align-content: center;
 }
+
+.cover {
+    height: 200px;
+    width: 200px;
+    margin-left: 250px;
+}

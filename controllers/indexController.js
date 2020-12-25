@@ -3,7 +3,7 @@ const productsModel = require('../models/productsModel');
 exports.index = async (req, res, next) => {
     // Get products from model
     const currentPage = req.query.page;
-    const option = req.body.options || '';
+    const option = req.query.type || '';
     let Desktopscheck, Allcheck, Laptopscheck, Tabletscheck, Hybridscheck;
 
     switch(option){
@@ -29,7 +29,6 @@ exports.index = async (req, res, next) => {
     const nextPage = pagination.nextPage;
     const prevPage = pagination.prevPage;
     const page = pagination.page;
-    //console.log(products);
     // Pass data to view to display list of products
     res.render('index', { Products, nextPage, prevPage, page, Desktopscheck, Laptopscheck, Tabletscheck, Hybridscheck, Allcheck});
 };

@@ -3,8 +3,8 @@ const router = express.Router();
 const addProductController = require('../controllers/addProductController');
 
 
-router.get('/', addProductController.add);
-router.post('/', addProductController.add);
+router.all('/', addProductController.add);
+
 
 router.post('/save', addProductController.SaveProduct);
 
