@@ -31,3 +31,9 @@ exports.uploadImage = async (filePath, fileInfo) => {
         metadata: metadata,
     });
 }
+
+exports.deleteImage = async (filePath) => {
+    let filename = filePath.split('/').pop().replace('%2F','/').replace('?alt=media','');
+    const file = bucket.file(filename);
+    await file.delete();
+}

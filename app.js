@@ -3,7 +3,10 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-require('dotenv').config({ path: '.env' })
+require('dotenv').config({ path: '.env' });
+const hbshelpers = require('handlebars-helpers');
+const helpers = hbshelpers();
+
 
 
 const db = require('./DAL/loadDatabase');
@@ -48,5 +51,9 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+const hbs = require('hbs');
+hbs.registerHelper(helpers);
+
 
 module.exports = app;

@@ -18,52 +18,161 @@
     <a href="/"><button type="button" class="btn btn-danger">Do not save</button></a>
 </div> --}}
 
+
+
 <div class="flex">
     <div class="col-lg-6 card">
         <div class="card-header">
-            <strong>Update a product</strong>
+            <strong>Cập nhật sản phẩm</strong>
         </div>
         <div class="card-body card-block">
             {{#with Product}}
             <form action="/update/{{_id}}/save" method="post" enctype="multipart/form-data">
                 <div class="row form-group">
-                    <div class="col col-md-3"><label for="manufacturer">Branch:</label></div>
+                    <div class="col col-md-3"><label for="manufacturer">Hãng sản xuất:</label></div>
                     <div class="col-12 col-md-9">
-                        <input type="text" name="manufacturer" id="manufacturer" value="{{manufacturer_id.name}}"
-                            class="form-control">
+                        <select name="manufacturer" id="manufacturer" class="form-control">
+                            {{#each ../Manufacturers}}
+                                <option value="{{_id}}" {{#eq ../manufacturer_id.name name}}selected{{/eq}}>{{name}}</option>
+                            {{/each}}
+                        </select>
                     </div>
                 </div>
                 <div class="row form-group">
-                    <div class="col col-md-3"><label for="name">Name:</label></div>
+                    <div class="col col-md-3"><label for="name">Tên sản phẩm:</label></div>
                     <div class="col-12 col-md-9">
-                        <input type="text" id="name" name="name" value="{{name}}" class="form-control">
+                        <input type="text" id="name" name="name" class="form-control" value="{{name}}">
                     </div>
                 </div>
                 <div class="row form-group">
-                    <div class="col col-md-3"><label for="cover">Image:</label></div>
+                    <div class="col col-md-3"><label for="cover">Ảnh đại diện:</label></div>
                     <div class="col-12 col-md-9">
                         <!--                         <input type="text" id="cover" name="cover" value="img/products/surface-pro.jpg" readonly="true" class="form-control">-->
-                        <input type="file" name="cover">
+                        <input type="file" name="cover" id="cover">
                     </div>
                 </div>
                 <div class="row form-group">
-                    <div class="col col-md-3"><label for="basePrice">BasePrice:</label></div>
+                    <img src="{{cover}}" class="cover" alt="cover" id="coverImage">
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="basePrice">Giá gốc:</label></div>
                     <div class="col-12 col-md-9">
-                        <input type="text" id="basePrice" name="basePrice" value="{{basePrice}}" class="form-control">
+                        <input type="number" id="basePrice" name="basePrice" class="form-control" value="{{basePrice}}">
                     </div>
                 </div>
                 <div class="row form-group">
-                    <div class="col col-md-3"><label for="type">Type</label></div>
+                    <div class="col col-md-3"><label for="type">Loại:</label></div>
                     <div class="col-12 col-md-9">
-                        <input type="text" id="type" name="type" value="{{type}}" class="form-control">
+                        <select id="type" name="type" class="form-control">
+                            <option value="Desktops" {{#eq type "Desktops"}}selected{{/eq}}>Desktops</option>
+                            <option value="Laptops" {{#eq type "Laptops"}}selected{{/eq}}>Laptops</option>
+                        </select>
                     </div>
                 </div>
-        <div class="card-footer d-flex justify-content-around">
-            <button type="submit" class="btn btn-primary btn-sm">
-                <i class="fa fa-dot-circle-o"></i> Save
-            </button>
-            <a href="/"><button type="button" class="btn btn-danger btn-sm">Do not save</button></a>
-        </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="OS">OS:</label></div>
+                    <div class="col-12 col-md-9">
+                        <input type="text" id="OS" name="OS" class="form-control" value="{{OS}}">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="display">Màn hình:</label></div>
+                    <div class="col-12 col-md-9">
+                        <input type="text" id="display" name="display" class="form-control" value="{{display}}">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="processor">CPU:</label></div>
+                    <div class="col-12 col-md-9">
+                        <input type="text" id="processor" name="processor" class="form-control" value="{{processor}}">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="memory">RAM:</label></div>
+                    <div class="col-12 col-md-9">
+                        <input type="text" id="memory" name="memory" class="form-control" value="{{memory}}">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="storage">Ổ cứng:</label></div>
+                    <div class="col-12 col-md-9">
+                        <input type="text" id="storage" name="storage" class="form-control" value="{{storage}}">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="graphics">VGA:</label></div>
+                    <div class="col-12 col-md-9">
+                        <input type="text" id="graphics" name="graphics" class="form-control" value="{{graphics}}">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="ethernet">LAN:</label></div>
+                    <div class="col-12 col-md-9">
+                        <input type="text" id="ethernet" name="ethernet" class="form-control" value="{{ethernet}}">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="wireless">Kết nối không dây:</label></div>
+                    <div class="col-12 col-md-9">
+                        <input type="text" id="wireless" name="wireless" class="form-control" value="{{wireless}}">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="audio">Audio:</label></div>
+                    <div class="col-12 col-md-9">
+                        <input type="text" id="audio" name="audio" class="form-control" value="{{audio}}">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="power">Pin:</label></div>
+                    <div class="col-12 col-md-9">
+                        <input type="text" id="power" name="power" class="form-control" value="{{power}}">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="slogan">Slogan:</label></div>
+                    <div class="col-12 col-md-9">
+                        <input type="text" id="slogan" name="slogan" class="form-control" value="{{slogan}}">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label>Tóm tắt:</label></div>
+                </div>
+                {{#with shortSpecs}}
+                <div class="row form-group" style="margin-left: 20px; margin-top: -20px">
+                    <div class="col col-md-3"><label for="shortCPU">CPU:</label></div>
+                    <div class="col-12 col-md-9">
+                        <input type="text" id="shortCPU" name="shortCPU" class="form-control" value="{{shortCPU}}">
+                    </div>
+                </div>
+                <div class="row form-group" style="margin-left: 20px">
+                    <div class="col col-md-3"><label for="shortDisplay">Màn hình:</label></div>
+                    <div class="col-12 col-md-9">
+                        <input type="text" id="shortDisplay" name="shortDisplay" class="form-control" value="{{shortDisplay}}">
+                    </div>
+                </div>
+                <div class="row form-group" style="margin-left: 20px">
+                    <div class="col col-md-3"><label for="shortOS">OS:</label></div>
+                    <div class="col-12 col-md-9">
+                        <input type="text" id="shortOS" name="shortOS" class="form-control" value="{{shortOS}}">
+                    </div>
+                </div>
+                {{/with}}
+                <div class="row form-group">
+                    <div class="col col-md-3"><label>Danh sách ảnh:</label></div>
+                    <div class="col-12 col-md-9">
+                        <input type="file" name="productImages" id="productImages" multiple onchange="addPreview(this);">
+                    </div>
+                </div>
+                <div class="row form-group" id="previewProductImages">
+                {{#each productImages}}
+                    <img style="width:200px; height:200px; margin:10px" src="{{path}}" alt="images"/>
+                {{/each}}
+                </div>
+                <div class="card-footer">
+                    <input type="submit" class="btn btn-primary btn-sm" value="Thêm">
+                    <a href="/"><button type="button" class="btn btn-danger btn-sm">Bỏ qua</button></a>
+                </div>
             </form>
             {{/with}}
         </div>

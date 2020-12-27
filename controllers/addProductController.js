@@ -1,6 +1,6 @@
 const formidable = require('formidable');
 const fs = require('fs');
-const imageService = require('../services/uploadImage');
+const imageService = require('../services/images');
 const productsModel = require('../models/productsModel');
 const manufacturerModel = require('../models/manufacturerModel');
 
@@ -14,7 +14,7 @@ exports.SaveProduct =  async (req, res, next) => {
     const form = formidable({ multiples: true });
     let newPath = [];
     let coverPath;
-    form.parse(req, async (err, fields, files) => {
+    await form.parse(req, async (err, fields, files) => {
         if (err) {
             next(err);
             return;
@@ -25,14 +25,12 @@ exports.SaveProduct =  async (req, res, next) => {
             await fs.rename(files.cover.path, coverPath, () => {
                 imageService.uploadImage(coverPath, files.cover).then();
             });
-            await Array.from(files.productImages).forEach(file => {
+            for(let file of files.productImages){
                 const res = file.name.split('.').pop();
                 newPath.push(file.path + '.' + res);
-                fs.rename(file.path, newPath[newPath.length - 1], () => {
-                    imageService.uploadImage(newPath[newPath.length - 1], file);
-                });
-            })
-
+                await fs.rename(file.path, newPath[newPath.length - 1],  () => {console.log('Đã đổi tên file')});
+                await imageService.uploadImage(newPath[newPath.length - 1], file);
+            }
         }
         await productsModel.AddProduct(fields, newPath, coverPath).then(res.redirect('/'));
     });

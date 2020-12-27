@@ -12,22 +12,50 @@ exports.list = async (filter,currentPage) => {
 }
 
 exports.getProduct = async (id) => {
-    console.log(id);
-    return Products.findOne({'_id': ObjectId(id)}).populate('manufacturer_id');
+    const product = await Products.findOne({'_id': ObjectId(id)}).populate('manufacturer_id');
+    product.productImages = await productImage.find({'product_id': ObjectId(id)});
+    return product;
 }
 
 
 
 exports.UpdateProduct = async (fields, coverLocal, id) =>{
     let fileName;
-    if(coverLocal) {
+    if(coverLocal !== '') {
         fileName = await coverLocal.split('/').pop();
         fileName = await fileName.split('\\').pop();
     }
+    const newProduct = {
+        manufacturer_id: ObjectId(fields.manufacturer),
+        name: fields.name,
+        basePrice: fields.basePrice,
+        type: fields.type,
+        shortSpecs: {
+            shortCPU: fields.shortCPU,
+            shortDisplay: fields.shortDisplay,
+            shortOS: fields.shortOS
+        },
+        OS: fields.OS,
+        display: fields.display,
+        processor: fields.processor,
+        memory: fields.memory,
+        storage: fields.storage,
+        graphics: fields.graphics,
+        ethernet: fields.ethernet,
+        wireless: fields.wireless,
+        audio: fields.audio,
+        power: fields.power,
+        slogan: fields.slogan
+
+    }
     const coverPath = await process.env.GClOUD_IMAGE_FOlDER + fileName + '?alt=media';
-    await Products.updateOne({'_id':ObjectId(id)}, {name:fields.name, manufacturer:fields.manufacturer, basePrice: fields.basePrice,type: fields.type });
-    if(fileName !==undefined){
-        await Products.updateOne({'_id':ObjectId(id)}, {cover: coverPath });
+    let product = await Products.findOneAndUpdate({'_id': id}, newProduct);
+    const oldImagePath = product.cover;
+    if(fileName !== undefined){
+        await Products.updateOne({'_id': id},{'cover': coverPath});
+        return oldImagePath;
+    }
+    else{
     }
 }
 
