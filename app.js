@@ -15,6 +15,7 @@ const usersRouter = require('./routes/users');
 const addProductsRouter = require('./routes/addProduct');
 const updateProductRouter = require('./routes/updateProduct');
 const deleteProductRouter = require('./routes/deleteProduct');
+const enableProductRouter = require('./routes/enableProduct');
 
 db.Connect();
 const app = express();
@@ -29,11 +30,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+
+app.use('/enable', enableProductRouter);
 app.use('/add', addProductsRouter);
 app.use('/users', usersRouter);
 app.use('/update', updateProductRouter);
 app.use('/delete', deleteProductRouter);
+app.use('/', indexRouter);
 
 
 // catch 404 and forward to error handler

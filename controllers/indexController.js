@@ -24,7 +24,7 @@ exports.index = async (req, res, next) => {
             break;
     }
     const name = req.query.name || '';
-    const pagination = await productsModel.list(req.query ? {'type': { "$regex": option, "$options": "i" } , 'name': { "$regex": name, "$options": "i" }}:{} ,currentPage);
+    const pagination = await productsModel.list(req.query ? {'type': { "$regex": option, "$options": "i" } , 'name': { "$regex": name, "$options": "i" } }:{} ,currentPage);
     const Products = pagination.docs;
     const nextPage = pagination.nextPage;
     const prevPage = pagination.prevPage;
@@ -35,4 +35,8 @@ exports.index = async (req, res, next) => {
 
 exports.delete = async (req, res, next) => {
     await productsModel.DeleteProduct(req).then(res.redirect('/'));
+}
+
+exports.enable = async (req, res, next) => {
+    await productsModel.EnableProduct(req).then(res.redirect('/'));
 }

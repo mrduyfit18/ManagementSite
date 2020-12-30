@@ -102,5 +102,9 @@ exports.AddProduct = async (fields, images, coverLocal) => {
 }
 
 exports.DeleteProduct = async (req) =>{
-    await Products.deleteOne({'_id': ObjectId(req.params.id)});
+    await Products.updateOne({'_id': ObjectId(req.params.id)}, {'state': 'hide'});
+}
+
+exports.EnableProduct = async (req) =>{
+    await Products.updateOne({'_id': ObjectId(req.params.id)}, {'state': 'active'});
 }

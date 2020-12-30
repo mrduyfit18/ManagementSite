@@ -11,3 +11,20 @@
     width: 200px;
     margin-left: 250px;
 }
+td > .cover{
+    height: 200px;
+    width: 200px;
+    margin: 0 !important;
+}
+
+.table tbody > tr > td.vert-aligned {
+    vertical-align: middle;
+}
+
+#button{
+    display: block;
+    margin: auto;
+}
+
+
+
