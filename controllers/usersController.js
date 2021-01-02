@@ -37,16 +37,14 @@ async function uploadFile(filePath, fileInfo) {
 
 
 exports.edit = async (req, res, next) => {
-    console.log(req.params.id);
     const account = await usersModel.getAccount(await req.params.id);
     res.render('user', {account});
 
 }
 
 exports.listindex = async (req, res, next) => {
-    console.log(req.params.id);
-    const account = await usersModel.getAccount(await req.params.id);
-    res.render('userslist');
+    const accounts = await usersModel.getFullAccounts();
+    res.render('userslist', {accounts});
 
 }
 
