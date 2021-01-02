@@ -31,9 +31,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
+app.use('/users', usersRouter);
+app.use('/userslist', usersRouter);
 app.use('/enable', enableProductRouter);
 app.use('/add', addProductsRouter);
-app.use('/users', usersRouter);
 app.use('/update', updateProductRouter);
 app.use('/delete', deleteProductRouter);
 app.use('/', indexRouter);
@@ -57,6 +58,7 @@ app.use(function(err, req, res, next) {
 
 const hbs = require('hbs');
 hbs.registerHelper(helpers);
+hbs.registerPartials(path.join(__dirname,'views','partials'));
 
 
 module.exports = app;

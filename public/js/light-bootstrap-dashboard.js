@@ -71,10 +71,8 @@ lbd = {
     checkSidebarImage: async function() {
         $sidebar = $('.sidebar');
         image_src = $sidebar.data('image');
-         const order = await Math.floor(Math.random() * 5) + 1;
-         console.log(order)
+        const order = await Math.floor(Math.random() * 5) + 1;
         image_src = await  image_src.replace(/4/i, order);
-        console.log(image_src);
         if (image_src !== undefined) {
             sidebar_container = '<div class="sidebar-background" style="background-image: url(' + image_src + ') "/>'
             $sidebar.append(sidebar_container);
