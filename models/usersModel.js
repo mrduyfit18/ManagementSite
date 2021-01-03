@@ -1,6 +1,6 @@
 const {database} = require('../DAL/loadDatabase');
 const mongoose=require('mongoose');
-//const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 const ObjectId = mongoose.Types.ObjectId;
 
 const Accounts = require('./mongooseModels/accounts');
@@ -20,4 +20,24 @@ exports.SaveProfileChange = async (fields, avatarLocal, id) => {
     const fileName = avatarLocal.split('/').pop();
     const avatarPath = process.env.GClOUD_IMAGE_FOlDER + fileName + '?alt=media'
     await Accounts.updateOne({_id: ObjectId(id)},{'name': fields.name, avatar: avatarPath});
+}
+
+exports.Signin = async (email, password) =>{
+    const account = await Accounts.findOne({email: email});
+    /*if(account.password === req.body.password){
+        return account;
+    }
+    else{
+        return false;
+    }*/
+    if(!account){
+        return 0;
+    }
+    let checkPassword = await bcrypt.compare(password, account.password);
+    if(checkPassword){
+        return account;
+    }
+    else{
+        return -1;
+    }
 }

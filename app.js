@@ -4,9 +4,11 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 require('dotenv').config({ path: '.env' });
+const session = require("express-session");
 const hbshelpers = require('handlebars-helpers');
 const helpers = hbshelpers();
-
+const userDB = require('./models/mongooseModels/accounts');
+const passport = require('./passport');
 
 
 const db = require('./DAL/loadDatabase');
@@ -16,6 +18,8 @@ const addProductsRouter = require('./routes/addProduct');
 const updateProductRouter = require('./routes/updateProduct');
 const deleteProductRouter = require('./routes/deleteProduct');
 const enableProductRouter = require('./routes/enableProduct');
+const signinRouter = require('./routes/signin');
+const signinIndirectRouter = require('./routes/signinIndirect');
 
 db.Connect();
 const app = express();
@@ -28,7 +32,41 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')))
+
+
+
+
+//passport middleware
+app.use(session({ secret: process.env.SESSION_SECRET , cookie: { maxAge: 360000000 }})); //time live
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(function (req, res, next) {
+  res.locals.user = req.user;
+  console.log(req.user);
+  next();
+});
+app.use(async function(req, res, next) {
+  if(req.url!=='/signinIndirect/submit' && req.url!=='/signin/submit') {
+    if (!req.user) {
+        if (req.cookies.id) {
+          const admin = await userDB.findById(req.cookies.id);
+          return res.render('signinIndirect', {email: admin.email})
+        }
+        else {
+          return res.render('signin');
+        }
+    }
+    else {
+      next();
+    }
+  }
+  else {
+    next();
+  }
+});
+
 
 
 app.use('/users', usersRouter);
@@ -37,7 +75,11 @@ app.use('/enable', enableProductRouter);
 app.use('/add', addProductsRouter);
 app.use('/update', updateProductRouter);
 app.use('/delete', deleteProductRouter);
+app.use('/signin/submit', signinRouter);
+app.use('/signinIndirect/submit', signinIndirectRouter);
 app.use('/', indexRouter);
+
+
 
 
 // catch 404 and forward to error handler

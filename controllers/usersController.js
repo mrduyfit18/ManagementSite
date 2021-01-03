@@ -67,3 +67,4 @@ exports.saveProfileChange = async (req, res, next) => {
         usersModel.SaveProfileChange(fields, newPath, req.params.id).then(res.redirect('/'));
     });
 }
+
