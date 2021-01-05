@@ -11,8 +11,9 @@ exports.getAccount = (id) =>{
     return Accounts.findOne({'_id': ObjectId(id)});
 }
 
-exports.getFullAccounts = async () =>{
-    return Accounts.find({});
+exports.getFullAccounts = async (currentPage) =>{
+    const currPage = currentPage || 1;
+    return await Accounts.paginate( {}, {page: currPage, limit: 10});
 }
 
 
@@ -40,4 +41,12 @@ exports.Signin = async (email, password) =>{
     else{
         return -1;
     }
+}
+
+exports.BlockUser = async (userID) =>{
+    await Accounts.updateOne({'_id': ObjectId(userID) }, {'$set':{'status': 'blocked'}});
+}
+
+exports.UnblockUser = async (userID) =>{
+    await Accounts.updateOne({'_id': ObjectId(userID)}, {'$set':{'status': 'active'}});
 }

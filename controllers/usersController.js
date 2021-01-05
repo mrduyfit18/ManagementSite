@@ -4,55 +4,35 @@ const admin = require("firebase-admin");
 const uuid = require('uuid-v4');
 
 const usersModel = require('../models/usersModel');
-
-const adminAccount = require('../storageserver-b4fd7-firebase-adminsdk-o7qpl-3939aaef50.json');
-
-// admin.initializeApp({
-//     credential: admin.credential.cert(adminAccount),
-//     storageBucket: 'gs://storageserver-b4fd7.appspot.com/'
-// });
-
-//const bucket = admin.storage().bucket();
-
-async function uploadFile(filePath, fileInfo) {
-
-    const metadata = {
-        metadata: {
-            // This line is very important. It's to create a download token.
-            firebaseStorageDownloadTokens: uuid()
-        },
-        contentType: fileInfo.type,
-        cacheControl: 'public, max-age=31536000',
-    };
-
-    // Uploads a local file to the bucket
-    const fileName = filePath.split('/').pop();
-    await bucket.upload(filePath,{
-        // Support for HTTP requests made with `Accept-Encoding: gzip`
-        destination: 'avatars/' + fileName,
-        gzip: true,
-        metadata: metadata,
-    });
-}
+const imageService = require('../services/images');
 
 
 exports.edit = async (req, res, next) => {
     const account = await usersModel.getAccount(await req.params.id);
-    res.render('user', {account});
+    if (res.locals.user._id.toString()!== req.params.id)
+    {
+        res.render('user', {account});
+    }
+    else
+    {
+        const admin = 1;
+        res.render('user', {admin});
+    }
+
 
 }
 
 exports.listindex = async (req, res, next) => {
-    const accounts = await usersModel.getFullAccounts();
-    res.render('userslist', {accounts});
+    const page = req.query.page;
+    const pagination = await usersModel.getFullAccounts(page);
+    res.render('userslist', {pagination});
 
 }
 
 exports.saveProfileChange = async (req, res, next) => {
     const form = formidable({ multiples: true });
     let newPath;
-    console.log(req.params.id);
-    form.parse(req, (err, fields, files) => {
+    await form.parse(req, async (err, fields, files) => {
         if (err) {
             next(err);
             return;
@@ -60,11 +40,22 @@ exports.saveProfileChange = async (req, res, next) => {
         if(files.avatar.name && files.avatar.type.includes('image') && files.avatar.size>0) {
             const res = files.avatar.name.split('.').pop();
             newPath  = files.avatar.path + '.' + res;
-            fs.rename(files.avatar.path, newPath,() => {
-                uploadFile(newPath, files.avatar).then();
-            });
+            await fs.rename(files.avatar.path, newPath, () => {});
+            await imageService.uploadImage(newPath, files.avatar).then();
         }
-        usersModel.SaveProfileChange(fields, newPath, req.params.id).then(res.redirect('/'));
+       await usersModel.SaveProfileChange(fields, newPath, req.params.id).then(res.redirect('/'));
     });
+}
+
+exports.block = async (req, res, next) => {
+    const userID = req.params.id;
+    await usersModel.BlockUser(userID);
+    res.send('1');
+}
+
+exports.unblock = async (req, res, next) => {
+    const userID = req.params.id;
+    await usersModel.UnblockUser(userID);
+    res.send('2');
 }
 

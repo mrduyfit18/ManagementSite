@@ -10,25 +10,40 @@
                         <table class="table table-hover table-striped">
                             <thead>
                             <th>STT</th>
-                            <th>Name</th>
                             <th>Email</th>
                             <th>ID</th>
                             <th>Trạng thái</th>
                             <th>Vai trò</th>
                             </thead>
                             <tbody>
-                            {{#each accounts}}
+                            {{#each pagination.docs}}
                             <tr>
                                 <td>{{@index}}</td>
-                                <td> <a href="/users/{{_id}}">{{name}}</a></td>
                                 <td>{{email}}</td>
-                                <td>{{_id}}</td>
+                                <td><a href="/users/{{_id}}">{{_id}}</a></td>
                                 <td>{{status}}</td>
                                 <td>{{type}}</td>
                             </tr>
                             {{/each}}
                             </tbody>
                         </table>
+                    </div>
+                    <div class="card-footer d-flex justify-content-around">
+                        <ul class="pagination pagination-sm m-0">
+                            <a href="/users/?page={{pagination.prevPage}}" class="{{#if pagination.hasPrevPage}} {{else}} disabled {{/if}}">
+                            <button class="page-link" >
+                                Prev
+                            </button>
+                            </a>
+                            <label class="page-link">
+                                {{pagination.page}}
+                            </label>
+                            <a href="/users/?page={{pagination.nextPage}}" class="{{#if pagination.hasNextPage}} {{else}} disabled {{/if}}">
+                            <button class="page-link">
+                                Next
+                            </button>
+                            </a>
+                        </ul>
                     </div>
                 </div>
             </div>
