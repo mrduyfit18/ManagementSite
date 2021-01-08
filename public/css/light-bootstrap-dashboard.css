@@ -1792,7 +1792,6 @@ fieldset[disabled] .form-control {
     padding-bottom: 5px;
     border-top: none !important;
     border-bottom: none;
-    text-align: left !important;
 }
 
 .table .td-actions .btn {
@@ -2104,10 +2103,13 @@ fieldset[disabled] .form-control {
 }
 
 .navbar.fixed {
-    width: calc(100% - $sidebar-width);
     right: 0;
     left: auto;
     border-radius: 0;
+}
+
+.navbar.fixed {
+    width: calc(100% - sidebar-width);
 }
 
 .navbar .nc-icon {
@@ -2848,8 +2850,8 @@ Copyright (c) 2015 Daniel Eden
 .card label {
     font-size: 14px;
     font-weight: 400;
-    color: #9A9A9A;
     margin-bottom: 0px;
+    text-align: center;
 }
 
 .card .card-category i,
@@ -2949,7 +2951,6 @@ Copyright (c) 2015 Daniel Eden
 .card .table tbody td:last-child,
 .card .table thead th:last-child {
     padding-right: 15px;
-    display: inline-flex;
 }
 
 .card .alert {

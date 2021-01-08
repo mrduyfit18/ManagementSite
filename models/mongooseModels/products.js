@@ -5,7 +5,6 @@ const mongoosePaginate = require('mongoose-paginate-v2');
 
 
 const Product = new Schema({
-    _id: ObjectId,
     name: String,
     manufacturer_id: {type: Schema.Types.ObjectId, ref: 'Manufacturer'},
     cover: String,
@@ -29,7 +28,9 @@ const Product = new Schema({
     power: String,
     slogan: String,
     state: String
-}, {versionKey: false});
+},
+    {versionKey: false}
+);
 
 Product.plugin(mongoosePaginate);
 module.exports = mongoose.model('Product', Product);

@@ -17,9 +17,7 @@ td > .cover{
     margin: 0 !important;
 }
 
-.table tbody > tr > td.vert-aligned {
-    vertical-align: middle;
-}
+
 
 #button{
     display: block;
@@ -28,9 +26,9 @@ td > .cover{
 
 
 /* Bordered form */
-form {
-    border: 3px solid #f1f1f1;
-}
+/*form {*/
+/*    border: 3px solid #f1f1f1;*/
+/*}*/
 
 /* Full-width inputs */
 input[type=text], input[type=password], input[type=email]  {
@@ -47,10 +45,9 @@ button {
     background-color: #4CAF50;
     color: white;
     padding: 14px 20px;
-    margin: 8px 0;
+    /*margin: 8px 0;*/
     border: none;
     cursor: pointer;
-    width: 100%;
 }
 
 /* Add a hover effect for buttons */
@@ -101,4 +98,11 @@ span.psw {
 
 a.disabled {
     pointer-events: none;
+}
+
+td, th {
+    text-align: center;
+}
+.form-group > .d-flex > label {
+    font-size: 12pt;
 }

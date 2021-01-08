@@ -1,5 +1,6 @@
 const {database} = require('../DAL/loadDatabase');
 const mongoose=require('mongoose');
+const path = require('path');
 const ObjectId = mongoose.Types.ObjectId;
 
 const Products = require('./mongooseModels/products');
@@ -22,8 +23,7 @@ exports.getProduct = async (id) => {
 exports.UpdateProduct = async (fields, coverLocal, id) =>{
     let fileName;
     if(coverLocal !== '') {
-        fileName = await coverLocal.split('/').pop();
-        fileName = await fileName.split('\\').pop();
+        fileName = coverLocal.split(path.sep).pop();
     }
     const newProduct = {
         manufacturer_id: ObjectId(fields.manufacturer),
@@ -48,7 +48,7 @@ exports.UpdateProduct = async (fields, coverLocal, id) =>{
         slogan: fields.slogan
 
     }
-    const coverPath = await process.env.GClOUD_IMAGE_FOlDER + fileName + '?alt=media';
+    const coverPath = await process.env.GClOUD_PRODUCT_FOlDER + fileName + '?alt=media';
     let product = await Products.findOneAndUpdate({'_id': id}, newProduct);
     const oldImagePath = product.cover;
     if(fileName !== undefined){
@@ -61,7 +61,7 @@ exports.UpdateProduct = async (fields, coverLocal, id) =>{
 
 exports.AddProduct = async (fields, images, coverLocal) => {
     const fileName = coverLocal.split('/').pop();
-    const coverPath = process.env.GClOUD_IMAGE_FOlDER + fileName + '?alt=media';
+    const coverPath = process.env.GClOUD_PRODUCT_FOlDER + fileName + '?alt=media';
     const newProduct = {
         manufacturer_id: ObjectId(fields.manufacturer),
         name: fields.name,
@@ -87,24 +87,24 @@ exports.AddProduct = async (fields, images, coverLocal) => {
         state: 'active'
 
     }
-    let image;
-    await Products.insertMany(newProduct);
-    const product = await Products.findOne({'cover': coverPath});
+    const product = await Products.create(newProduct);
+    let productImages = [];
     for(let file of images){
-        const imageName = file.split('/').pop();
-        const newPath = process.env.GClOUD_IMAGE_FOlDER + imageName + '?alt=media';
-        image = {
+        const imageName = file.split(path.sep).pop();
+        const newPath = process.env.GClOUD_PRODUCT_FOlDER + imageName + '?alt=media';
+        const image = {
             product_id: product._id,
             path: newPath
         }
-        await productImage.insertMany(image);
+        await productImages.push(image);
     }
+    await productImage.insertMany(productImages);
 }
 
-exports.DeleteProduct = async (req) =>{
-    await Products.updateOne({'_id': ObjectId(req.params.id)}, {'state': 'hide'});
+exports.DeleteProduct = async (productID) =>{
+    await Products.updateOne({'_id': ObjectId(productID)}, {'state': 'hide'});
 }
 
-exports.EnableProduct = async (req) =>{
-    await Products.updateOne({'_id': ObjectId(req.params.id)}, {'state': 'active'});
+exports.EnableProduct = async (productID) =>{
+    await Products.updateOne({'_id': ObjectId(productID)}, {'state': 'active'});
 }

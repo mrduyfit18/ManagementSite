@@ -10,7 +10,6 @@
                             <form method="get" action="/" id="search">
                                 <div class="search hidden-xs" data-style="hidden">
                                     <div class="input">
-
                                         <input type="text" name="name" value="" placeholder="Type here..." id="textSearch" />
                                         <input type="submit" id="myBtn"/>
                                     </div>
@@ -52,49 +51,30 @@
                                                    aria-describedby="bootstrap-data-table_info">
                                                 <thead style="text-align: center">
                                                 <tr role="row">
-                                                    <th class="sorting_asc" tabindex="0"
-                                                        aria-controls="bootstrap-data-table" rowspan="1" colspan="1"
-                                                        aria-sort="ascending"
-                                                        aria-label="Name: activate to sort column descending"
-                                                        style="width: 239px;">Branch</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="bootstrap-data-table"
-                                                        rowspan="1" colspan="1"
-                                                        aria-label="Position: activate to sort column ascending"
-                                                        style="width: 399px;">Name</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="bootstrap-data-table"
-                                                        rowspan="1" colspan="1"
-                                                        aria-label="Office: activate to sort column ascending"
-                                                        style="width: 177px;">Price</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="bootstrap-data-table"
-                                                        rowspan="1" colspan="1"
-                                                        aria-label="Salary: activate to sort column ascending"
-                                                        style="width: 140px;">Cover path</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="bootstrap-data-table"
-                                                        rowspan="1" colspan="1"
-                                                        aria-label="Salary: activate to sort column ascending"
-                                                        style="width: 140px;">Type</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="bootstrap-data-table"
-                                                        rowspan="1" colspan="1"
-                                                        aria-label="Salary: activate to sort column ascending"
-                                                        style="width: 140px;">Option</th>
+                                                    <th>Thương hiệu</th>
+                                                    <th>Tên sản phẩm</th>
+                                                    <th>Giá</th>
+                                                    <th>Ảnh</th>
+                                                    <th>Loại</th>
+                                                    <th>Khoá</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody style="text-align: center">
                                                 {{#each Products}}
                                                     <tr>
                                                         <td>{{manufacturer_id.name}}</td>
-                                                        <td><a href="/update/{{_id}}">{{name}}</a></td>
+                                                        <td><a href="/products/edit?id={{_id}}">{{name}}</a></td>
                                                         <td>{{basePrice}}</td>
                                                         <td> <img class="cover" src="{{cover}}"/></td>
                                                         <td>{{type}}</td>
-                                                        <td class="vert-aligned">
+                                                        <td>
                                                             {{#eq state  "active"}}
-                                                            <form action="/delete/{{_id}}" method="post" id="button">
+                                                            <form action="/products/delete/id={{_id}}" method="post" id="button">
                                                                 <input class="btn btn-danger" type="submit" value="Delete">
                                                             </form>
                                                             {{/eq}}
-                                                            {{#eq state  "hide"}}
-                                                                <form action="/enable/{{_id}}" method="post" id="button">
+                                                            {{#eq state "hide"}}
+                                                                <form action="/products/enable?id={{_id}}" method="post" id="button" >
                                                                     <input class="btn btn-success" type="submit" value="Enable" >
                                                                 </form>
                                                             {{/eq}}
@@ -107,25 +87,25 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-footer d-flex justify-content-around">
-                                <ul class="pagination pagination-sm m-0">
-                                    <a href="/?page={{prevPage}}">
-                                    <button class="page-link" >
-                                        Prev
-                                    </button>
-                                    </a>
-                                    <label class="page-link">
-                                        {{page}}
-                                    </label>
-                                    <a href="/?page={{nextPage}}">
-                                    <button class="page-link">
-                                        Next
-                                    </button>
-                                    </a>
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-center" >
+                                    <li class="page-item">
+                                        <a class="page-link" href="/products?page={{prevPage}}">
+                                            <span aria-hidden="true">&laquo;</span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link active" href="javascript:;">{{page}}</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="/products?page={{nextPage}}">
+                                            <span aria-hidden="true">&raquo;</span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </li>
                                 </ul>
-                            </div>
+                            </nav>
                             <div class="card-footer">
-                                <form action="/add" method="post" class="d-flex justify-content-end">
+                                <form action="/products/add" method="post" class="d-flex justify-content-end">
                                     <input class="btn btn-primary" type="submit" value="Add Product">
                                 </form>
                             </div>
@@ -134,6 +114,8 @@
                 </div>
             </div>
         </div>
+
+
 
 
 <script>

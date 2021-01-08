@@ -41,7 +41,7 @@ exports.saveProfileChange = async (req, res, next) => {
             const res = files.avatar.name.split('.').pop();
             newPath  = files.avatar.path + '.' + res;
             await fs.rename(files.avatar.path, newPath, () => {});
-            await imageService.uploadImage(newPath, files.avatar).then();
+            await imageService.uploadImage(newPath, files.avatar, 'avatar/')
         }
        await usersModel.SaveProfileChange(fields, newPath, req.params.id).then(res.redirect('/'));
     });

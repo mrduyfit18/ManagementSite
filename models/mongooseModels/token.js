@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
 
-const manufacturer = new Schema({
-    name: String,
-    logo: String
+const token = new Schema({
+        token: String,
+        date: Date
     },
     {versionKey: false}
 );
 
-module.exports = mongoose.model('Manufacturer', manufacturer);
+module.exports = mongoose.model('Token', token);

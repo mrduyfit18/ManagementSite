@@ -1,5 +1,6 @@
 const admin = require("firebase-admin");
 const uuid = require('uuid-v4');
+const path = require('path');
 
 const adminAccount = require('../storageserver-b4fd7-firebase-adminsdk-o7qpl-3939aaef50.json');
 
@@ -11,8 +12,7 @@ admin.initializeApp({
 
 const bucket = admin.storage().bucket();
 
-exports.uploadImage = async (filePath, fileInfo) => {
-
+exports.uploadImage = async (filePath, fileInfo, destination) => {          //destination: products/  || avatar/
     const metadata = {
         metadata: {
             // This line is very important. It's to create a download token.
@@ -23,17 +23,17 @@ exports.uploadImage = async (filePath, fileInfo) => {
     };
 
     // Uploads a local file to the bucket
-    const fileName = filePath.split('/').pop();
+    const fileName = filePath.split(path.sep).pop();
     await bucket.upload(filePath,{
         // Support for HTTP requests made with `Accept-Encoding: gzip`
-        destination: 'products/' + fileName,
+        destination: destination + fileName,
         gzip: true,
         metadata: metadata,
     });
 }
 
 exports.deleteImage = async (filePath) => {
-    let filename = filePath.split('/').pop().replace('%2F','/').replace('?alt=media','');
+    let filename = filePath.split(path.sep).pop().replace('%2F','/').replace('?alt=media','');
     const file = bucket.file(filename);
     await file.delete();
 }

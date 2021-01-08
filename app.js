@@ -12,12 +12,8 @@ const passport = require('./passport');
 
 
 const db = require('./DAL/loadDatabase');
-const indexRouter = require('./routes/index');
+const productsRouter = require('./routes/products');
 const usersRouter = require('./routes/users');
-const addProductsRouter = require('./routes/addProduct');
-const updateProductRouter = require('./routes/updateProduct');
-const deleteProductRouter = require('./routes/deleteProduct');
-const enableProductRouter = require('./routes/enableProduct');
 const signinRouter = require('./routes/signin');
 const signinIndirectRouter = require('./routes/signinIndirect');
 
@@ -32,7 +28,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static('public'));
 
 
 
@@ -67,16 +63,14 @@ app.use(async function(req, res, next) {
 });
 
 
-
+app.use('/products', productsRouter);
 app.use('/users', usersRouter);
 app.use('/userslist', usersRouter);
-app.use('/enable', enableProductRouter);
-app.use('/add', addProductsRouter);
-app.use('/update', updateProductRouter);
-app.use('/delete', deleteProductRouter);
 app.use('/signin/submit', signinRouter);
 app.use('/signinIndirect/submit', signinIndirectRouter);
-app.use('/', indexRouter);
+app.use('/', function(req, res){
+  res.redirect('/products');
+});
 
 
 

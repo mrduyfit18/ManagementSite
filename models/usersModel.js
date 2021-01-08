@@ -19,7 +19,7 @@ exports.getFullAccounts = async (currentPage) =>{
 
 exports.SaveProfileChange = async (fields, avatarLocal, id) => {
     const fileName = avatarLocal.split('/').pop();
-    const avatarPath = process.env.GClOUD_IMAGE_FOlDER + fileName + '?alt=media'
+    const avatarPath = process.env.GClOUD_AVATAR_FOlDER + fileName + '?alt=media'
     await Accounts.updateOne({_id: ObjectId(id)},{'name': fields.name, avatar: avatarPath});
 }
 
