@@ -12,8 +12,8 @@
     margin-left: 250px;
 }
 td > .cover{
-    height: 200px;
-    width: 200px;
+    height: 150px;
+    width: 150px;
     margin: 0 !important;
 }
 
@@ -105,4 +105,15 @@ td, th {
 }
 .form-group > .d-flex > label {
     font-size: 12pt;
+}
+
+.date {
+    margin: 0 !important;
+    width: 80px !important;
+    height: 30px !important;
+    text-align-last:center;
+}
+#datepicker {
+    margin-left: 15px !important;
+    width: 200px !important;
 }

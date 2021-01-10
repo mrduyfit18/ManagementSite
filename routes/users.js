@@ -4,7 +4,7 @@ const usersController = require('../controllers/usersController');
 
 router.post('/:id/save', usersController.saveProfileChange);
 router.get('/:id', usersController.edit);
-router.get('/', usersController.listindex);
+router.get('/', usersController.index);
 router.post('/block/:id', usersController.block);
 router.post('/unblock/:id', usersController.unblock);
 

@@ -16,6 +16,8 @@ const productsRouter = require('./routes/products');
 const usersRouter = require('./routes/users');
 const signinRouter = require('./routes/signin');
 const signinIndirectRouter = require('./routes/signinIndirect');
+const ordersRouter = require('./routes/orders');
+const statisticsRouter = require('./routes/statistics');
 
 db.Connect();
 const app = express();
@@ -63,14 +65,16 @@ app.use(async function(req, res, next) {
 });
 
 
+app.use('/statistics', statisticsRouter);
+app.use('/orders', ordersRouter);
 app.use('/products', productsRouter);
 app.use('/users', usersRouter);
 app.use('/userslist', usersRouter);
 app.use('/signin/submit', signinRouter);
 app.use('/signinIndirect/submit', signinIndirectRouter);
-app.use('/', function(req, res){
-  res.redirect('/products');
-});
+// app.use('/', function(req, res){
+//   res.redirect('/products');
+// });
 
 
 
@@ -94,6 +98,39 @@ app.use(function(err, req, res, next) {
 const hbs = require('hbs');
 hbs.registerHelper(helpers);
 hbs.registerPartials(path.join(__dirname,'views','partials'));
+
+hbs.registerHelper('convertPrice', function (index) {
+  const moneyFormatter2 = new Intl.NumberFormat('de-DE', {
+    style: 'currency',
+    currency: 'VND',
+    minimumFractionDigits: 0,
+  });
+  return moneyFormatter2.format(index).replace(/\s/g, '');
+});
+
+hbs.registerHelper('totalProducts', function (cart) {
+  if(cart) {
+    return cart.listProducts.reduce(
+        (accumulator, currentValue) => accumulator + currentValue.number
+        , 0 );
+  }
+  return 0;
+});
+
+hbs.registerHelper('orderPrice', function (cart) {
+  if(cart) {
+    return cart.listProducts.reduce(
+        (accumulator, currentValue) => accumulator + currentValue.number * currentValue.productID.basePrice
+        , 0 );
+  }
+  return 0;
+});
+
+hbs.registerHelper('convertDate', function (date) {
+  date = new Date((date.toLocaleString("en-US", {timeZone: 'Asia/Ho_Chi_Minh'})));
+  return date.getDate()+ '/' + (date.getMonth()+1) + '/' +date.getFullYear();
+});
+
 
 
 module.exports = app;

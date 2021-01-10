@@ -6,7 +6,8 @@ const order = new Schema({
         user_id: { type: Schema.Types.ObjectId, ref: 'Account' },
         status: String,
         dateModified: Schema.Types.Date,
-        contact_id: { type: Schema.Types.ObjectId, ref: 'Contact' }
+        contact_id: { type: Schema.Types.ObjectId, ref: 'Contact' },
+        totalCost: Number
     },
     {versionKey: false}
 );

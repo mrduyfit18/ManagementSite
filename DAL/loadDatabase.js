@@ -14,7 +14,7 @@ async function Connect() {
     try {
         // Connect the client to the server
 
-        await mongoose.connect(uri,{useUnifiedTopology: true, useNewUrlParser:true});
+        await mongoose.connect(uri,{useUnifiedTopology: true, useNewUrlParser:true, useFindAndModify: false});
         //b = await client.db('data');
         console.log('Successfully connected');
 

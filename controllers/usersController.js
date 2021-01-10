@@ -11,21 +11,21 @@ exports.edit = async (req, res, next) => {
     const account = await usersModel.getAccount(await req.params.id);
     if (res.locals.user._id.toString()!== req.params.id)
     {
-        res.render('user', {account});
+        res.render('users/user', {account});
     }
     else
     {
         const admin = 1;
-        res.render('user', {admin});
+        res.render('users/user', {admin});
     }
 
 
 }
 
-exports.listindex = async (req, res, next) => {
+exports.index = async (req, res, next) => {
     const page = req.query.page;
     const pagination = await usersModel.getFullAccounts(page);
-    res.render('userslist', {pagination});
+    res.render('users/index', {pagination, Users: pagination.docs});
 
 }
 

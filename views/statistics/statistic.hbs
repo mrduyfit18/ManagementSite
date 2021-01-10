@@ -1,0 +1,22 @@
+<table class="table table-hover">
+    <thead>
+    <th>STT</th>
+    <th>Mã sản phẩm</th>
+    <th>Tên sản phẩm</th>
+    <th>Ảnh</th>
+    <th>Giá</th>
+    <th>Số lượng</th>
+    </thead>
+    <tbody>
+    {{#each Products}}
+        <tr>
+            <td>{{add @index 1}}</td>
+            <td>{{info._id}}</td>
+            <td>{{info.name}}</td>
+            <td> <img class="cover" src="{{info.cover}}"/></td>
+            <td>{{convertPrice info.basePrice}}</td>
+            <td>{{total}}</td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>

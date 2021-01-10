@@ -40,3 +40,9 @@ function addPreview(input) {
         reader.readAsDataURL(file)
     })
 }
+
+
+
+
+
+

@@ -1,0 +1,80 @@
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card strpied-tabled-with-hover">
+                    <div class="card-header ">
+                        <h4 class="card-title"><strong>Top 10 sản phẩm bán chạy</strong></h4>
+                    </div>
+                    <div class="card-body table-full-width table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <th>STT</th>
+                            <th>Mã sản phẩm</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Ảnh</th>
+                            <th>Giá</th>
+                            <th>Số lượng</th>
+                            </thead>
+                            <tbody>
+                            {{#each topProducts}}
+                                <tr>
+                                    <td>{{add @index 1}}</td>
+                                    <td>{{info._id}}</td>
+                                    <td>{{info.name}}</td>
+                                    <td> <img class="cover" src="{{info.cover}}"/></td>
+                                    <td>{{convertPrice info.basePrice}}</td>
+                                    <td>{{total}}</td>
+                                </tr>
+                            {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card strpied-tabled-with-hover">
+                    <div class="card-header ">
+                        <h4 class="card-title"><strong>Doanh số</strong></h4>
+                        <p></p>
+                        <div class="d-flex justify-content-start flex-wrap">
+                            <p>Theo: &nbsp;&nbsp;</p>
+                                <select id="statistics-option" class="date" onchange="TimeChange();">
+                                    <option value="1" selected>Ngày</option>
+                                    <option value="2">Tuần</option>
+                                    <option value="3">Tháng</option>
+                                    <option value="4">Quý</option>
+                                    <option value="5">Năm</option>
+                                </select>
+                            <input type="text" id="datepicker" class="date" placeholder="Chọn ngày" onchange="TimeChange();">
+                        </div>
+                    </div>
+                    <div class="card-body table-full-width table-responsive" id="statistic">
+                        <table class="table table-hover">
+                            <thead>
+                            <th>STT</th>
+                            <th>Mã sản phẩm</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Ảnh</th>
+                            <th>Giá</th>
+                            <th>Số lượng</th>
+                            </thead>
+                            <tbody>
+                            {{#each topProducts}}
+                                <tr>
+                                    <td>{{add @index 1}}</td>
+                                    <td>{{info._id}}</td>
+                                    <td>{{info.name}}</td>
+                                    <td> <img class="cover" src="{{info.cover}}"/></td>
+                                    <td>{{convertPrice info.basePrice}}</td>
+                                    <td>{{total}}</td>
+                                </tr>
+                            {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

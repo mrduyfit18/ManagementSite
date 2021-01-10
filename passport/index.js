@@ -13,6 +13,9 @@ passport.use(new LocalStrategy({usernameField: 'email',},
         else if(user === -1){
             return done(null, false, { message: 'Mật khẩu không chính xác!!' });
         }
+        else if(user.type !=='admin'){
+            return done(null, false, { message: 'Không có quyền truy cập' });
+        }
         return done(null, user);
     }
 ));

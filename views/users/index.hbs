@@ -16,9 +16,9 @@
                             <th>Vai trò</th>
                             </thead>
                             <tbody>
-                            {{#each pagination.docs}}
+                            {{#each Users}}
                             <tr>
-                                <td>{{@index}}</td>
+                                <td>{{add @index 1}}</td>
                                 <td>{{email}}</td>
                                 <td><a href="/users/{{_id}}">{{_id}}</a></td>
                                 <td>{{status}}</td>
