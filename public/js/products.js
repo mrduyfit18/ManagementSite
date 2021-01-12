@@ -48,3 +48,32 @@ function filterChanged(sortOption) {
     });
 
 }
+$('#nextPage').on('click' ,function(){
+    event.preventDefault();
+    const url = $('#nextPage').data('id');
+    $.ajax({
+        url: url,
+        type: 'GET',
+        method: 'GET',
+        success: function (result) {
+            $('#productsList').html(result);
+            const newURL = url.replace('/get', '');
+            window.history.pushState("object or string", "Title", newURL);
+        }
+    });
+})
+
+$('#prevPage').on('click' ,function(){
+    event.preventDefault();
+    const url = $('#prevPage').data('id');
+    $.ajax({
+        url: url,
+        type: 'GET',
+        method: 'GET',
+        success: function (result) {
+            $('#productsList').html(result);
+            const newURL = url.replace('/get', '');
+            window.history.pushState("object or string", "Title", newURL);
+        }
+    });
+})

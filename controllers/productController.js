@@ -60,7 +60,7 @@ exports.SaveUpdate =  async (req, res, next) => {
                 const res = files.cover.name.split('.').pop();
                 newPath = files.cover.path + '.' + res;
                 fs.rename(files.cover.path, newPath, () => {
-                    imageService.uploadImage(newPath, files.cover).then();
+                    imageService.uploadImage(newPath, files.cover, 'products/').then();
                 });
             }
         }
@@ -102,12 +102,12 @@ exports.index = async (req, res, next) => {
     const pagination = await productsModel.list( {'type': { "$regex": type, "$options": "i" } , 'manufacturer_id': {"$in": manufacturer_id },
         'name': { "$regex": name, "$options": "i" } } ,currentPage);
     const Products = pagination.docs;
-    const nextPage = '/products?' + ((type.length !== 0)? `type=${type}&`:'')  + ((name.length !== 0)? `name=${name}&`:'') +
+    const nextPage = '/products/get?' + ((type.length !== 0)? `type=${type}&`:'')  + ((name.length !== 0)? `name=${name}&`:'') +
                                     ((manufacturer_id.length === 1)? `manufacturer=${manufacturer_id[0]}&`:'')+
                                     'page=' + ((pagination.hasNextPage===true)? pagination.nextPage : pagination.page);
-    const prevPage = '/products?' + ((type.length !== 0)? `type=${type}&`:'')  + ((name.length !== 0)? `name=${name}&`:'') +
+    const prevPage = '/products/get?' + ((type.length !== 0)? `type=${type}&`:'')  + ((name.length !== 0)? `name=${name}&`:'') +
                                     ((manufacturer_id.length === 1)? `manufacturer=${manufacturer_id[0]}&`:'')+
-                                    'page=' + ((pagination.hasPrevPage===true)? pagination.nextPage : 1);
+                                    'page=' + ((pagination.hasPrevPage===true)? pagination.prevPage : 1);
     const page = pagination.page;
     const Manufacturers = await manufacturerModel.list();
     // Pass data to view to display list of products
@@ -138,6 +138,8 @@ exports.addManufacturer = async (req, res, next) => {
 exports.getProducts = async (req, res, next) => {
     const type = req.query.type || '';
     const name = req.query.name || '';
+    const currPage = req.query.page || 1;
+
     let manufacturer_id = [];
     if(!req.query.manufacturer){
         const manufacturers = await manufacturerModel.list();
@@ -150,14 +152,14 @@ exports.getProducts = async (req, res, next) => {
     }
 
     const pagination = await productsModel.list( {'type': { "$regex": type, "$options": "i" } , 'manufacturer_id': {"$in": manufacturer_id },
-        'name': { "$regex": name, "$options": "i" } } , 1);
+        'name': { "$regex": name, "$options": "i" } } , currPage);
     const Products = pagination.docs;
-    const nextPage = '/products?' + ((type.length !== 0)? `type=${type}&`:'')  + ((name.length !== 0)? `name=${name}&`:'') +
+    const nextPage = '/products/get?' + ((type.length !== 0)? `type=${type}&`:'')  + ((name.length !== 0)? `name=${name}&`:'') +
                                     ((manufacturer_id.length === 1)? `manufacturer=${manufacturer_id[0]}&`:'')+
                                     'page=' + ((pagination.hasNextPage===true)? pagination.nextPage : pagination.page);
-    const prevPage = '/products?' + ((type.length !== 0)? `type=${type}&`:'')  + ((name.length !== 0)? `name=${name}&`:'') +
+    const prevPage = '/products/get?' + ((type.length !== 0)? `type=${type}&`:'')  + ((name.length !== 0)? `name=${name}&`:'') +
                                     ((manufacturer_id.length === 1)? `manufacturer=${manufacturer_id[0]}&`:'')+
-                                    'page=' + ((pagination.hasPrevPage===true)? pagination.nextPage : 1);
+                                    'page=' + ((pagination.hasPrevPage===true)? pagination.prevPage : 1);
     const page = pagination.page;
     // Pass data to view to display list of products
     res.render('products/products', { layout: false, Products, nextPage, prevPage, page});

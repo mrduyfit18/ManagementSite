@@ -36,7 +36,7 @@ app.use(express.static('public'));
 
 
 //passport middleware
-app.use(session({ secret: process.env.SESSION_SECRET , cookie: { maxAge: 360000000 }})); //time live
+app.use(session({ secret: process.env.SESSION_SECRET , cookie: { maxAge: 360000000 }, resave: true, saveUninitialized: true})); //time live
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -72,9 +72,9 @@ app.use('/users', usersRouter);
 app.use('/userslist', usersRouter);
 app.use('/signin/submit', signinRouter);
 app.use('/signinIndirect/submit', signinIndirectRouter);
-// app.get('/', function(req, res){
-//   res.redirect('/products');
-// });
+app.get('/', function(req, res){
+  res.redirect('/products');
+});
 
 
 

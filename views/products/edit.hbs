@@ -1,6 +1,6 @@
 
 <div class="flex">
-    <div class="col-lg-6 card col-lg-offset-3">
+    <div class="col-lg-10 card col-lg-offset-1">
         <div class="card-header">
             <strong>Cập nhật sản phẩm</strong>
         </div>
@@ -8,9 +8,9 @@
             {{#with Product}}
             <form action="/products/edit/save?id={{_id}}" method="post" enctype="multipart/form-data">
                 <div class="row form-group">
-                    <div class="col col-md-3"><label for="manufacturer">Hãng sản xuất:</label></div>
-                    <div class="col-12 col-md-9">
-                        <select name="manufacturer" id="manufacturer" class="form-control" required>
+                    <div class="col col-md-2 d-flex"><label class="align-self-center" for="manufacturer"><strong>Hãng sản xuất:</strong></label></div>
+                    <div class="col-12 col-md-10 input-group mb-3">
+                        <select name="manufacturer" id="manufacturer" class="form-control border-left border-right">
                             {{#each ../Manufacturers}}
                                 <option value="{{_id}}" {{#eq ../manufacturer_id.name name}}selected{{/eq}}>{{name}}</option>
                             {{/each}}
@@ -18,15 +18,14 @@
                     </div>
                 </div>
                 <div class="row form-group">
-                    <div class="col col-md-3"><label for="name">Tên sản phẩm:</label></div>
-                    <div class="col-12 col-md-9">
+                    <div class="col col-md-2 d-flex"><label class="align-self-center" for="name"><strong>Tên sản phẩm:</strong></label></div>
+                    <div class="col-12 col-md-10">
                         <input type="text" id="name" name="name" class="form-control" value="{{name}}" required>
                     </div>
                 </div>
                 <div class="row form-group">
-                    <div class="col col-md-3"><label for="cover">Ảnh đại diện:</label></div>
-                    <div class="col-12 col-md-9">
-                        <!--                         <input type="text" id="cover" name="cover" value="img/products/surface-pro.jpg" readonly="true" class="form-control">-->
+                    <div class="col col-md-2 d-flex"><label class="align-self-center" for="cover"><strong>Ảnh đại diện:</strong></label></div>
+                    <div class="col-12 col-md-10">
                         <input type="file" name="cover" id="cover">
                     </div>
                 </div>
@@ -34,116 +33,116 @@
                     <img src="{{cover}}" class="cover" alt="cover" id="coverImage">
                 </div>
                 <div class="row form-group">
-                    <div class="col col-md-3"><label for="basePrice">Giá gốc:</label></div>
-                    <div class="col-12 col-md-9">
+                    <div class="col col-md-2 d-flex"><label class="align-self-center" for="basePrice"><strong>Giá gốc:</strong></label></div>
+                    <div class="col-12 col-md-10">
                         <input type="number" id="basePrice" name="basePrice" class="form-control" value="{{basePrice}}" required>
                     </div>
                 </div>
                 <div class="row form-group">
-                    <div class="col col-md-3"><label for="type">Loại:</label></div>
-                    <div class="col-12 col-md-9">
-                        <select id="type" name="type" class="form-control">
+                    <div class="col col-md-2 d-flex"><label class="align-self-center" for="type"><strong>Loại:</strong></label></div>
+                    <div class="col-12 col-md-10">
+                        <select id="type" name="type" class="form-control" required>
                             <option value="Desktops" {{#eq type "Desktops"}}selected{{/eq}}>Desktops</option>
                             <option value="Laptops" {{#eq type "Laptops"}}selected{{/eq}}>Laptops</option>
                         </select>
                     </div>
                 </div>
                 <div class="row form-group">
-                    <div class="col col-md-3"><label for="OS">OS:</label></div>
-                    <div class="col-12 col-md-9">
-                        <input type="text" id="OS" name="OS" class="form-control" value="{{OS}}" required>
+                    <div class="col col-md-2 d-flex"><label class="align-self-center" for="OS"><strong>OS:</strong></label></div>
+                    <div class="col-12 col-md-10">
+                        <input type="text" id="OS" name="OS" class="form-control"  value="{{OS}}" required>
                     </div>
                 </div>
                 <div class="row form-group">
-                    <div class="col col-md-3"><label for="display">Màn hình:</label></div>
-                    <div class="col-12 col-md-9">
+                    <div class="col col-md-2 d-flex"><label class="align-self-center" for="display"><strong>Màn hình:</strong></label></div>
+                    <div class="col-12 col-md-10">
                         <input type="text" id="display" name="display" class="form-control" value="{{display}}" required>
                     </div>
                 </div>
                 <div class="row form-group">
-                    <div class="col col-md-3"><label for="processor">CPU:</label></div>
-                    <div class="col-12 col-md-9">
+                    <div class="col col-md-2 d-flex"><label class="align-self-center" for="processor"><strong>CPU:</strong></label></div>
+                    <div class="col-12 col-md-10">
                         <input type="text" id="processor" name="processor" class="form-control" value="{{processor}}" required>
                     </div>
                 </div>
                 <div class="row form-group">
-                    <div class="col col-md-3"><label for="memory">RAM:</label></div>
-                    <div class="col-12 col-md-9">
+                    <div class="col col-md-2 d-flex"><label class="align-self-center" for="memory"><strong>RAM:</strong></label></div>
+                    <div class="col-12 col-md-10">
                         <input type="text" id="memory" name="memory" class="form-control" value="{{memory}}" required>
                     </div>
                 </div>
                 <div class="row form-group">
-                    <div class="col col-md-3"><label for="storage">Ổ cứng:</label></div>
-                    <div class="col-12 col-md-9">
+                    <div class="col col-md-2 d-flex"><label class="align-self-center" for="storage"><strong>Ổ cứng:</strong></label></div>
+                    <div class="col-12 col-md-10">
                         <input type="text" id="storage" name="storage" class="form-control" value="{{storage}}" required>
                     </div>
                 </div>
                 <div class="row form-group">
-                    <div class="col col-md-3"><label for="graphics">VGA:</label></div>
-                    <div class="col-12 col-md-9">
+                    <div class="col col-md-2 d-flex"><label class="align-self-center" for="graphics"><strong>VGA:</strong></label></div>
+                    <div class="col-12 col-md-10">
                         <input type="text" id="graphics" name="graphics" class="form-control" value="{{graphics}}" required>
                     </div>
                 </div>
                 <div class="row form-group">
-                    <div class="col col-md-3"><label for="ethernet">LAN:</label></div>
-                    <div class="col-12 col-md-9">
+                    <div class="col col-md-2 d-flex"><label class="align-self-center" for="ethernet"><strong>LAN:</strong></label></div>
+                    <div class="col-12 col-md-10">
                         <input type="text" id="ethernet" name="ethernet" class="form-control" value="{{ethernet}}" required>
                     </div>
                 </div>
                 <div class="row form-group">
-                    <div class="col col-md-3"><label for="wireless">Kết nối không dây:</label></div>
-                    <div class="col-12 col-md-9">
+                    <div class="col col-md-2 d-flex"><label class="align-self-center" for="wireless"><strong>Kết nối không dây:</strong></label></div>
+                    <div class="col-12 col-md-10">
                         <input type="text" id="wireless" name="wireless" class="form-control" value="{{wireless}}" required>
                     </div>
                 </div>
                 <div class="row form-group">
-                    <div class="col col-md-3"><label for="audio">Audio:</label></div>
-                    <div class="col-12 col-md-9">
+                    <div class="col col-md-2 d-flex"><label class="align-self-center" for="audio"><strong>Audio:</strong></label></div>
+                    <div class="col-12 col-md-10">
                         <input type="text" id="audio" name="audio" class="form-control" value="{{audio}}" required>
                     </div>
                 </div>
                 <div class="row form-group">
-                    <div class="col col-md-3"><label for="power">Pin:</label></div>
-                    <div class="col-12 col-md-9">
+                    <div class="col col-md-2 d-flex"><label class="align-self-center" for="power"><strong>Pin:</strong></label></div>
+                    <div class="col-12 col-md-10">
                         <input type="text" id="power" name="power" class="form-control" value="{{power}}" required>
                     </div>
                 </div>
                 <div class="row form-group">
-                    <div class="col col-md-3"><label for="slogan">Slogan:</label></div>
-                    <div class="col-12 col-md-9">
+                    <div class="col col-md-2 d-flex"><label class="align-self-center" for="slogan"><strong>Slogan:</strong></label></div>
+                    <div class="col-12 col-md-10">
                         <input type="text" id="slogan" name="slogan" class="form-control" value="{{slogan}}" required>
                     </div>
                 </div>
                 <div class="row form-group">
-                    <div class="col col-md-3"><label>Tóm tắt:</label></div>
+                    <div class="col col-md-2 d-flex"><label><strong>Tóm tắt:</strong></label></div>
                 </div>
                 {{#with shortSpecs}}
                 <div class="row form-group" style="margin-left: 20px; margin-top: -20px">
-                    <div class="col col-md-3"><label for="shortCPU">CPU:</label></div>
-                    <div class="col-12 col-md-9">
+                    <div class="col col-md-2 d-flex"><label class="align-self-center" for="shortCPU">CPU:</label></div>
+                    <div class="col-12 col-md-10">
                         <input type="text" id="shortCPU" name="shortCPU" class="form-control" value="{{shortCPU}}" required>
                     </div>
                 </div>
                 <div class="row form-group" style="margin-left: 20px">
-                    <div class="col col-md-3"><label for="shortDisplay">Màn hình:</label></div>
-                    <div class="col-12 col-md-9">
+                    <div class="col col-md-2 d-flex"><label  class="align-self-center" for="shortDisplay">Màn hình:</label></div>
+                    <div class="col-12 col-md-10">
                         <input type="text" id="shortDisplay" name="shortDisplay" class="form-control" value="{{shortDisplay}}" required>
                     </div>
                 </div>
                 <div class="row form-group" style="margin-left: 20px">
-                    <div class="col col-md-3"><label for="shortOS">OS:</label></div>
-                    <div class="col-12 col-md-9">
+                    <div class="col col-md-2 d-flex"><label  for="shortOS" class="align-self-center">OS:</label></div>
+                    <div class="col-12 col-md-10">
                         <input type="text" id="shortOS" name="shortOS" class="form-control" value="{{shortOS}}" required>
                     </div>
                 </div>
                 {{/with}}
                 <div class="row form-group">
-                    <div class="col col-md-3"><label>Danh sách ảnh:</label></div>
+                    <div class="col col-md-2 d-flex"><label  class="align-self-center"><strong>Danh sách ảnh:</strong></label></div>
                 </div>
-                <div class="row form-group" id="previewProductImages">
-                {{#each productImages}}
-                    <img style="width:200px; height:200px; margin:10px" src="{{path}}" alt="images"/>
-                {{/each}}
+                <div class="row form-group d-flex flex-wrap justify-content-around  " id="previewProductImages">
+                    {{#each productImages}}
+                        <img style="width:200px; height:200px; margin:10px" src="{{path}}" alt="images"/>
+                    {{/each}}
                 </div>
                 <div class="card-footer">
                     <input type="submit" class="btn btn-primary btn-sm" value="Cập nhật">

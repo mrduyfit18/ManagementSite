@@ -132,7 +132,6 @@ td, th {
 
 #searchTextBox {
     margin-top: 18px !important;
-    margin-left: -42px !important;
     z-index: -10 !important;
     width: 500px !important;
 }
