@@ -30,6 +30,33 @@
                             </tbody>
                         </table>
                     </div>
+
+                    <div class="d-flex justify-content-center">
+                        <div id="piechart"></div>
+                    </div>
+                    <script type="text/javascript">
+                        // Load google charts
+                        google.charts.load('current', {'packages':['corechart']});
+                        google.charts.setOnLoadCallback(drawChart);
+
+                        // Draw the chart and set the chart values
+                        function drawChart() {
+                            var data = google.visualization.arrayToDataTable([
+                                ['Products', 'Number'],
+                                {{#each topProducts}}
+                                    ['{{info.name}}', {{total}}],
+                                {{/each}}
+                            ]);
+
+                            // Optional; add a title and set the width and height of the chart
+                            var options = {'title':'Top 10 sản phẩm', 'width':550, 'height':400};
+
+                            // Display the chart inside the <div> element with id="piechart"
+                            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                            chart.draw(data, options);
+                        }
+                    </script>
+
                 </div>
             </div>
             <div class="col-md-12">
@@ -37,41 +64,20 @@
                     <div class="card-header ">
                         <h4 class="card-title"><strong>Doanh số</strong></h4>
                         <p></p>
-                        <div class="d-flex justify-content-start flex-wrap">
+                        <div class="d-flex justify-content-start flex-wrap" id="optionDiv">
                             <p>Theo: &nbsp;&nbsp;</p>
-                                <select id="statistics-option" class="date" onchange="TimeChange();">
+                                <select id="statistics-option" class="date" onchange="DateChange();">
                                     <option value="1" selected>Ngày</option>
                                     <option value="2">Tuần</option>
                                     <option value="3">Tháng</option>
                                     <option value="4">Quý</option>
                                     <option value="5">Năm</option>
                                 </select>
-                            <input type="text" id="datepicker" class="date" placeholder="Chọn ngày" onchange="TimeChange();">
+                            <input type="text" id="datepicker" class="date" placeholder="Chọn ngày" onchange="DateChange();">
                         </div>
                     </div>
                     <div class="card-body table-full-width table-responsive" id="statistic">
-                        <table class="table table-hover">
-                            <thead>
-                            <th>STT</th>
-                            <th>Mã sản phẩm</th>
-                            <th>Tên sản phẩm</th>
-                            <th>Ảnh</th>
-                            <th>Giá</th>
-                            <th>Số lượng</th>
-                            </thead>
-                            <tbody>
-                            {{#each topProducts}}
-                                <tr>
-                                    <td>{{add @index 1}}</td>
-                                    <td>{{info._id}}</td>
-                                    <td>{{info.name}}</td>
-                                    <td> <img class="cover" src="{{info.cover}}"/></td>
-                                    <td>{{convertPrice info.basePrice}}</td>
-                                    <td>{{total}}</td>
-                                </tr>
-                            {{/each}}
-                            </tbody>
-                        </table>
+
                     </div>
                 </div>
             </div>

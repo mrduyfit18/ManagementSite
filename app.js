@@ -72,7 +72,7 @@ app.use('/users', usersRouter);
 app.use('/userslist', usersRouter);
 app.use('/signin/submit', signinRouter);
 app.use('/signinIndirect/submit', signinIndirectRouter);
-// app.use('/', function(req, res){
+// app.get('/', function(req, res){
 //   res.redirect('/products');
 // });
 

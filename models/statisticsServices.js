@@ -61,13 +61,58 @@ exports.getStatisticByDay = async (date) => {
         },
         {
             $addFields: {
-                dateString: {$dateToString: {format: '%d/%m/%Y', date: '$info.dateModified'}  }
+                dateString: {$dateToString: {format: '%m/%d/%Y', date: '$info.dateModified'}  }
             }
         },
         {
             $match:{
                 'info.status': {'$ne': 'cart'},
                 'dateString': {'$eq': date}
+            }
+        },
+        {
+            $group :
+                {
+                    _id : '$product_id',
+                    'total': { $sum: '$number' },
+                }
+        },
+        {
+            $lookup: {
+                from: 'products',
+                localField: '_id',
+                foreignField: '_id',
+                as: 'info'
+            }
+        },
+        {
+            $unwind: '$info'
+        },
+        {
+            $addFields: {
+                totalRevenue: { $sum: { $multiply: [ '$total', '$info.basePrice' ]  } }
+            }
+        }
+    ]);
+}
+
+exports.getStatisticByTime = async (firstDate, lastDate) => {
+    return details.aggregate([
+        {
+            $lookup: {
+                from: 'orders',
+                localField: 'order_id',
+                foreignField: '_id',
+                as: 'info'
+            }
+        },
+        {
+            $unwind: '$info'
+        },
+        {
+            $match:{
+                'info.status': {'$ne': 'cart'},
+                'info.dateModified': {'$gte': firstDate, '$lt': lastDate}
             }
         },
         {

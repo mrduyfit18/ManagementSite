@@ -17,6 +17,9 @@ router.post('/delete', productController.delete);
 //Cập nhật trnagj thái
 router.post('/enable', productController.enable);
 
+//filter
+router.get('/get', productController.getProducts);
+
 router.get('/', productController.index);
 
 router.post('/add-manufacturer', productController.addManufacturer);

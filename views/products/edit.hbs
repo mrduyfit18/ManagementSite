@@ -6,7 +6,7 @@
         </div>
         <div class="card-body card-block">
             {{#with Product}}
-            <form action="/edit/save?id={{_id}}" method="post" enctype="multipart/form-data">
+            <form action="/products/edit/save?id={{_id}}" method="post" enctype="multipart/form-data">
                 <div class="row form-group">
                     <div class="col col-md-3"><label for="manufacturer">Hãng sản xuất:</label></div>
                     <div class="col-12 col-md-9">
@@ -146,7 +146,7 @@
                 {{/each}}
                 </div>
                 <div class="card-footer">
-                    <input type="submit" class="btn btn-primary btn-sm" value="Thêm">
+                    <input type="submit" class="btn btn-primary btn-sm" value="Cập nhật">
                     <a href="/products"><button type="button" class="btn btn-danger btn-sm">Bỏ qua</button></a>
                 </div>
             </form>

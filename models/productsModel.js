@@ -9,7 +9,7 @@ const productImage = require('./mongooseModels/productImages');
 
 exports.list = async (filter,currentPage) => {
     const currPage = currentPage || 1;
-    return await Products.paginate( filter, {page: currPage, limit: 10, populate:  'manufacturer_id'});
+    return await Products.paginate( filter, {page: currPage, limit: 5, populate:  'manufacturer_id'});
 }
 
 exports.getProduct = async (id) => {

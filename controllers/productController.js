@@ -1,9 +1,11 @@
 const formidable = require('formidable');
 const fs = require('fs');
+const mongoose = require('mongoose');
 const imageService = require('../services/images');
 const productsModel = require('../models/productsModel');
 const manufacturerModel = require('../models/manufacturerModel');
 const path = require('path');
+
 
 
 exports.add = async (req, res, next) => {
@@ -62,7 +64,8 @@ exports.SaveUpdate =  async (req, res, next) => {
                 });
             }
         }
-        const oldImagePath = await productsModel.UpdateProduct(fields, newPath, req.params.id).then(res.redirect('/'));
+        const productID = req.query.id;
+        const oldImagePath = await productsModel.UpdateProduct(fields, newPath, productID).then(res.redirect('/products'));
         if(oldImagePath) {
             await imageService.deleteImage(oldImagePath);
         }
@@ -83,34 +86,32 @@ exports.enable = async (req, res, next) => {
 exports.index = async (req, res, next) => {
     // Get products from model
     const currentPage = req.query.page;
-    const option = req.query.type || '';
-    let Desktopscheck, Allcheck, Laptopscheck, Tabletscheck, Hybridscheck;
-
-    switch(option){
-        case 'Desktops':
-            Desktopscheck = 1;
-            break;
-        case 'Laptops':
-            Laptopscheck = 1;
-            break;
-        case 'Tablets':
-            Tabletscheck = 1;
-            break;
-        case 'Hybrids':
-            Hybridscheck = 1;
-            break;
-        default:
-            Allcheck = 1;
-            break;
-    }
+    const type = req.query.type || '';
     const name = req.query.name || '';
-    const pagination = await productsModel.list(req.query ? {'type': { "$regex": option, "$options": "i" } , 'name': { "$regex": name, "$options": "i" } }:{} ,currentPage);
+    let manufacturer_id = [];
+    if(!req.query.manufacturer){
+        const manufacturers = await manufacturerModel.list();
+        for(let manufacturer of manufacturers){
+            manufacturer_id.push(manufacturer._id);
+        }
+    }
+    else if(typeof req.query.manufacturer === 'string'){
+        manufacturer_id.push(mongoose.Types.ObjectId(req.query.manufacturer));
+    }
+
+    const pagination = await productsModel.list( {'type': { "$regex": type, "$options": "i" } , 'manufacturer_id': {"$in": manufacturer_id },
+        'name': { "$regex": name, "$options": "i" } } ,currentPage);
     const Products = pagination.docs;
-    const nextPage = pagination.nextPage;
-    const prevPage = pagination.prevPage;
+    const nextPage = '/products?' + ((type.length !== 0)? `type=${type}&`:'')  + ((name.length !== 0)? `name=${name}&`:'') +
+                                    ((manufacturer_id.length === 1)? `manufacturer=${manufacturer_id[0]}&`:'')+
+                                    'page=' + ((pagination.hasNextPage===true)? pagination.nextPage : pagination.page);
+    const prevPage = '/products?' + ((type.length !== 0)? `type=${type}&`:'')  + ((name.length !== 0)? `name=${name}&`:'') +
+                                    ((manufacturer_id.length === 1)? `manufacturer=${manufacturer_id[0]}&`:'')+
+                                    'page=' + ((pagination.hasPrevPage===true)? pagination.nextPage : 1);
     const page = pagination.page;
+    const Manufacturers = await manufacturerModel.list();
     // Pass data to view to display list of products
-    res.render('products/allProducts', { Products, nextPage, prevPage, page, Desktopscheck, Laptopscheck, Tabletscheck, Hybridscheck, Allcheck});
+    res.render('products/allProducts', { Products, nextPage, prevPage, page, Manufacturers});
 };
 
 exports.addManufacturer = async (req, res, next) => {
@@ -134,3 +135,30 @@ exports.addManufacturer = async (req, res, next) => {
     });
 }
 
+exports.getProducts = async (req, res, next) => {
+    const type = req.query.type || '';
+    const name = req.query.name || '';
+    let manufacturer_id = [];
+    if(!req.query.manufacturer){
+        const manufacturers = await manufacturerModel.list();
+        for(let manufacturer of manufacturers){
+            manufacturer_id.push(manufacturer._id);
+        }
+    }
+    else if(typeof req.query.manufacturer === 'string'){
+        manufacturer_id.push(mongoose.Types.ObjectId(req.query.manufacturer));
+    }
+
+    const pagination = await productsModel.list( {'type': { "$regex": type, "$options": "i" } , 'manufacturer_id': {"$in": manufacturer_id },
+        'name': { "$regex": name, "$options": "i" } } , 1);
+    const Products = pagination.docs;
+    const nextPage = '/products?' + ((type.length !== 0)? `type=${type}&`:'')  + ((name.length !== 0)? `name=${name}&`:'') +
+                                    ((manufacturer_id.length === 1)? `manufacturer=${manufacturer_id[0]}&`:'')+
+                                    'page=' + ((pagination.hasNextPage===true)? pagination.nextPage : pagination.page);
+    const prevPage = '/products?' + ((type.length !== 0)? `type=${type}&`:'')  + ((name.length !== 0)? `name=${name}&`:'') +
+                                    ((manufacturer_id.length === 1)? `manufacturer=${manufacturer_id[0]}&`:'')+
+                                    'page=' + ((pagination.hasPrevPage===true)? pagination.nextPage : 1);
+    const page = pagination.page;
+    // Pass data to view to display list of products
+    res.render('products/products', { layout: false, Products, nextPage, prevPage, page});
+}
