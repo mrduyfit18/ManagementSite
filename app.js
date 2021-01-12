@@ -64,12 +64,15 @@ app.use(async function(req, res, next) {
   }
 });
 
+app.get('/signout', function(req, res) {
+  req.logout();
+  res.redirect('/');
+});
 
 app.use('/statistics', statisticsRouter);
 app.use('/orders', ordersRouter);
 app.use('/products', productsRouter);
 app.use('/users', usersRouter);
-app.use('/userslist', usersRouter);
 app.use('/signin/submit', signinRouter);
 app.use('/signinIndirect/submit', signinIndirectRouter);
 app.get('/', function(req, res){
@@ -131,6 +134,22 @@ hbs.registerHelper('convertDate', function (date) {
   return date.getDate()+ '/' + (date.getMonth()+1) + '/' +date.getFullYear();
 });
 
+hbs.registerHelper('sumNum', function (list) {
+  if(list) {
+    return list.reduce(
+        (accumulator, currentValue) => accumulator + currentValue.total
+        , 0 );
+  }
+  return 0;
+});
 
+hbs.registerHelper('sumCost', function (list) {
+  if(list) {
+    return list.reduce(
+        (accumulator, currentValue) => accumulator + currentValue.totalRevenue
+        , 0 );
+  }
+  return 0;
+});
 
 module.exports = app;

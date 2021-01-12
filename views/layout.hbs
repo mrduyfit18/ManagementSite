@@ -70,13 +70,13 @@
           <!-- Navbar -->
           <nav class="navbar navbar-expand-lg">
               <div class="container-fluid">
-                  <a class="navbar-brand" href="#pablo"> PC TRADING </a>
+                  <a class="navbar-brand" href="javascript:;"> PC TRADING </a>
                   <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                       <span class="navbar-toggler-bar burger-lines"></span>
                       <span class="navbar-toggler-bar burger-lines"></span>
                       <span class="navbar-toggler-bar burger-lines"></span>
                   </button>
-
+                  {{#if user}}<a href="/signout" style="float: right;"> Đăng xuất </a>{{/if}}
               </div>
           </nav>
         {{{body}}}

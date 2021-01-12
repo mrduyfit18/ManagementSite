@@ -9,7 +9,7 @@
 .cover {
     height: 200px;
     width: 200px;
-    margin-left: 250px;
+    /*margin-left: 250px;*/
 }
 td > .cover{
     height: 150px;

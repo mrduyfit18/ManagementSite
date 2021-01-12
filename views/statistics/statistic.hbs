@@ -1,4 +1,4 @@
-<h5 style="margin-left: 20px"><strong>{{convertDate firstDate}} - {{convertDate lastDate}}</strong></h5>
+{{#if firstDate}}<h5 style="margin-left: 20px"><strong>{{convertDate firstDate}} - {{convertDate lastDate}}</strong></h5>{{/if}}
 <table class="table table-hover left-table">
     <thead>
     <th>STT</th>
@@ -20,9 +20,9 @@
     <tr>
         <td></td>
         <td></td>
-        <td></td>
-        <td>Tổng cộng:</td>
-        <td>{{convertPrice totalRevenue}}</td>
+        <td style="text-align:right !important; ">Tổng cộng:</td>
+        <td>{{sumNum Products}}</td>
+        <td>{{convertPrice (sumCost Products)}}</td>
     </tr>
     </tbody>
 </table>
