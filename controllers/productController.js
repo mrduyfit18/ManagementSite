@@ -30,11 +30,22 @@ exports.SaveProduct =  async (req, res, next) => {
             await imageService.uploadImage(coverPath, files.cover, 'products/').then();
 
             //list pics
-            for(let file of files.productImages){
-                const res = file.name.split('.').pop();
-                newPath.push(file.path + '.' + res);
-                await fs.rename(file.path, newPath[newPath.length - 1],  () => {});
-                await imageService.uploadImage(newPath[newPath.length - 1], file, 'products/');
+            if(Array.isArray(files.productImages)===false){
+                const res = files.productImages.name.split('.').pop();
+                const imagePath = files.productImages.path + '.' + res;
+                newPath.push(imagePath);
+                await fs.rename(files.productImages.path, imagePath, () => {});
+                await imageService.uploadImage(imagePath, files.productImages, 'products/').then();
+            }
+            else {
+
+                for (let file of files.productImages) {
+                    const res = file.name.split('.').pop();
+                    newPath.push(file.path + '.' + res);
+                    await fs.rename(file.path, newPath[newPath.length - 1], () => {
+                    });
+                    await imageService.uploadImage(newPath[newPath.length - 1], file, 'products/');
+                }
             }
         }
         await productsModel.AddProduct(fields, newPath, coverPath).then(res.redirect('/'));
