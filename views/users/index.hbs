@@ -30,7 +30,7 @@
                     </div>
                     <div class="card-footer d-flex justify-content-around">
                         <ul class="pagination pagination-sm m-0">
-                            <a href="/users/?page={{pagination.prevPage}}" class="{{#if pagination.hasPrevPage}} {{else}} disabled {{/if}}">
+                            <a href="/users?page={{pagination.prevPage}}" class="{{#if pagination.hasPrevPage}} {{else}} disabled {{/if}}">
                             <button class="page-link" >
                                 Prev
                             </button>
@@ -38,7 +38,7 @@
                             <label class="page-link">
                                 {{pagination.page}}
                             </label>
-                            <a href="/users/?page={{pagination.nextPage}}" class="{{#if pagination.hasNextPage}} {{else}} disabled {{/if}}">
+                            <a href="/users?page={{pagination.nextPage}}" class="{{#if pagination.hasNextPage}} {{else}} disabled {{/if}}">
                             <button class="page-link">
                                 Next
                             </button>
