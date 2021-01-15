@@ -60,7 +60,7 @@ exports.UpdateProduct = async (fields, coverLocal, id) =>{
 }
 
 exports.AddProduct = async (fields, images, coverLocal) => {
-    const fileName = coverLocal.split('/').pop();
+    const fileName = coverLocal.split(path.sep).pop();
     const coverPath = process.env.GClOUD_PRODUCT_FOlDER + fileName + '?alt=media';
     const newProduct = {
         manufacturer_id: ObjectId(fields.manufacturer),
